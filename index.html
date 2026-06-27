@@ -1,0 +1,1079 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>白色恐怖大事記　Timeline：1949至今</title>
+  <style>
+    :root {
+      --bg: #11100f;
+      --paper: #f4efe6;
+      --ink: #f1ece4;
+      --muted: rgba(244, 239, 230, 0.64);
+      --faint: rgba(244, 239, 230, 0.18);
+      --line: rgba(244, 239, 230, 0.35);
+      --accent: #b84a42;
+      --accent-soft: rgba(184, 74, 66, 0.24);
+      --panel: rgba(18, 17, 16, 0.84);
+      --max: 1180px;
+      --shadow: 0 30px 90px rgba(0, 0, 0, .42);
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+      --face-w: min(720px, 66vw);
+      --face-h: 460px;
+      --radius: 940px;
+      --event-image: none;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(156, 47, 42, .18), transparent 34vw),
+        radial-gradient(circle at 78% 82%, rgba(151, 119, 72, .13), transparent 38vw),
+        linear-gradient(135deg, #0f0d0c 0%, #191613 50%, #0f0e0d 100%);
+      line-height: 1.8;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .23;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mix-blend-mode: overlay;
+    }
+
+    .page {
+      width: min(var(--max), calc(100% - 36px));
+      margin: 0 auto;
+      padding: 4vh 0 8vh;
+    }
+
+    .timeline-module {
+      position: relative;
+      isolation: isolate;
+      margin: 0 auto;
+      border-radius: 32px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.022)),
+        rgba(17, 16, 15, .74);
+      box-shadow: var(--shadow);
+    }
+
+    .timeline-module::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(184,74,66,.18), transparent 28%),
+        radial-gradient(circle at 88% 78%, rgba(244,239,230,.08), transparent 32%);
+      z-index: -1;
+    }
+
+    .collapsed-panel {
+      position: relative;
+      padding: clamp(30px, 5.5vw, 72px) clamp(20px, 5vw, 64px);
+      min-height: min(76vh, 720px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: clamp(26px, 5vw, 52px);
+    }
+
+    .collapsed-panel::after {
+      content: "1949  至今";
+      position: absolute;
+      inset: auto -2vw 2vh auto;
+      font-size: clamp(5rem, 17vw, 15rem);
+      line-height: 1;
+      letter-spacing: -.12em;
+      font-weight: 900;
+      color: rgba(244,239,230,.055);
+      z-index: -1;
+      white-space: nowrap;
+    }
+
+    .module-title {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.2vw, 1.68rem);
+      line-height: 1.35;
+      letter-spacing: .02em;
+      font-weight: 850;
+      color: var(--paper);
+    }
+
+    .module-deck {
+      margin: 18px 0 0;
+      max-width: 680px;
+      color: rgba(244,239,230,.7);
+      font-size: clamp(.98rem, 1.5vw, 1.15rem);
+    }
+
+    .compact-timeline {
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+      padding: 10px 2px 20px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(244,239,230,.3) transparent;
+    }
+
+    .compact-track {
+      min-width: 940px;
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(9, minmax(86px, 1fr));
+      gap: 0;
+      align-items: start;
+      padding: 0 4px;
+    }
+
+    .compact-track::before {
+      content: "";
+      position: absolute;
+      left: 5.6%;
+      right: 5.6%;
+      top: 76px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(244,239,230,.56), transparent);
+    }
+
+    .compact-item {
+      position: relative;
+      text-align: center;
+      min-height: 142px;
+      color: rgba(244,239,230,.78);
+    }
+
+    .compact-date {
+      min-height: 44px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0 5px;
+      font-weight: 800;
+      font-size: .9rem;
+      line-height: 1.2;
+      color: rgba(244,239,230,.78);
+    }
+
+    .compact-dot {
+      position: relative;
+      z-index: 1;
+      width: 13px;
+      height: 13px;
+      border-radius: 99px;
+      margin: 25px auto 14px;
+      background: rgba(244,239,230,.82);
+      box-shadow: 0 0 0 7px rgba(244,239,230,.07);
+    }
+
+    .compact-label {
+      width: 100%;
+      padding: 0 4px;
+      font-size: .88rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: rgba(244,239,230,.7);
+    }
+
+    .priority-1 .compact-date,
+    .priority-1 .compact-label { color: var(--paper); }
+    .priority-1 .compact-dot {
+      width: 20px;
+      height: 20px;
+      margin-top: 21px;
+      background: var(--accent);
+      box-shadow: 0 0 0 9px rgba(184,74,66,.18), 0 0 28px rgba(184,74,66,.48);
+    }
+    .priority-3 { opacity: .68; }
+    .priority-3 .compact-dot {
+      width: 10px;
+      height: 10px;
+      margin-top: 26px;
+      background: rgba(244,239,230,.58);
+    }
+
+    .expand-row {
+      display: flex;
+      justify-content: center;
+      margin-top: -10px;
+    }
+
+    button { font: inherit; }
+
+    .expand-button,
+    .collapse-button,
+    .nav-button,
+    .arrow-button {
+      appearance: none;
+      border: 0;
+      color: var(--paper);
+      background: rgba(244,239,230,.12);
+      border: 1px solid rgba(244,239,230,.18);
+      cursor: pointer;
+      transition: transform .25s ease, background .25s ease, border-color .25s ease, opacity .25s ease;
+    }
+
+    .expand-button {
+      border-radius: 999px;
+      padding: 13px 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: .05em;
+    }
+
+    .expand-button:hover,
+    .collapse-button:hover,
+    .nav-button:hover,
+    .arrow-button:hover {
+      transform: translateY(-1px);
+      background: rgba(184,74,66,.22);
+      border-color: rgba(184,74,66,.48);
+    }
+
+    .expanded-panel {
+      position: relative;
+      display: none;
+      min-height: 820px;
+      overflow: hidden;
+    }
+
+    .timeline-module.is-expanded .collapsed-panel { display: none; }
+    .timeline-module.is-expanded .expanded-panel { display: block; }
+
+    .expanded-background {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(90deg, rgba(17,16,15,.96) 0%, rgba(17,16,15,.72) 40%, rgba(17,16,15,.9) 100%),
+        var(--event-image),
+        radial-gradient(circle at var(--spot-x, 22%) var(--spot-y, 28%), color-mix(in srgb, var(--accent) 36%, transparent), transparent 31%),
+        linear-gradient(132deg, var(--bg-a, #181411), var(--bg-b, #0f0e0d));
+      background-size: cover, cover, auto, auto;
+      background-position: center, center, center, center;
+      transition: background 520ms ease;
+    }
+
+    .expanded-background::before {
+      content: var(--ghost, "1949");
+      position: absolute;
+      inset: auto auto 3vh 2vw;
+      font-size: clamp(7rem, 24vw, 22rem);
+      line-height: .8;
+      letter-spacing: -.13em;
+      font-weight: 950;
+      color: rgba(244,239,230,.058);
+      white-space: nowrap;
+      transition: opacity .45s ease, transform .45s ease;
+    }
+
+    .expanded-background::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 7px),
+        radial-gradient(circle at 50% 50%, transparent 0 38%, rgba(0,0,0,.38) 72%);
+      mix-blend-mode: normal;
+    }
+
+    .expanded-topbar {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: clamp(22px, 4vw, 46px) clamp(20px, 4vw, 54px) 0;
+    }
+
+    .expanded-topbar h2 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.2vw, 1.68rem);
+      line-height: 1.35;
+      letter-spacing: .02em;
+      font-weight: 850;
+    }
+
+    .expanded-hint {
+      margin: 12px 0 0;
+      color: rgba(244,239,230,.62);
+      font-size: .95rem;
+    }
+
+    .collapse-button {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: .92rem;
+      white-space: nowrap;
+    }
+
+    .stage {
+      position: relative;
+      z-index: 1;
+      padding: 36px 0 18px;
+    }
+
+    .prism-shell {
+      position: relative;
+      height: 540px;
+      perspective: 1600px;
+      perspective-origin: 50% 48%;
+      overflow: hidden;
+      cursor: grab;
+      touch-action: pan-y;
+      user-select: none;
+    }
+
+    .prism-shell.is-dragging { cursor: grabbing; }
+
+    .prism-halo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(84vw, 980px);
+      height: 380px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 20%, transparent), transparent 66%);
+      filter: blur(18px);
+      opacity: .74;
+      pointer-events: none;
+    }
+
+    .prism-carousel {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--face-w);
+      height: var(--face-h);
+      transform-style: preserve-3d;
+      transform: translate(-50%, -50%) translateZ(calc(var(--radius) * -1)) rotateY(0deg);
+      transition: transform 650ms cubic-bezier(.18,.72,.22,1);
+      will-change: transform;
+    }
+
+    .prism-shell.is-dragging .prism-carousel { transition: none; }
+
+    .prism-face {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      align-content: center;
+      width: 100%;
+      height: 100%;
+      padding: clamp(24px, 4vw, 50px);
+      border-radius: 8px;
+      border: 1px solid rgba(244,239,230,.18);
+      border-left-color: rgba(244,239,230,.27);
+      border-right-color: rgba(0,0,0,.32);
+      background:
+        linear-gradient(90deg, rgba(244,239,230,.075), transparent 10%, transparent 90%, rgba(0,0,0,.18)),
+        linear-gradient(180deg, rgba(27,25,23,.92), rgba(13,12,11,.88));
+      box-shadow:
+        inset 1px 0 0 rgba(244,239,230,.08),
+        inset -1px 0 0 rgba(0,0,0,.34),
+        0 14px 44px rgba(0,0,0,.24);
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      opacity: .46;
+      filter: saturate(.85) brightness(.7);
+      transition: opacity .35s ease, filter .35s ease, box-shadow .35s ease;
+    }
+
+    .prism-face::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(244,239,230,.08);
+      border-left-color: rgba(244,239,230,.17);
+      pointer-events: none;
+    }
+
+    .prism-face::after {
+      content: "檔案";
+      position: absolute;
+      right: 20px;
+      top: 18px;
+      color: rgba(244,239,230,.16);
+      letter-spacing: .4em;
+      font-size: .75rem;
+      font-weight: 800;
+      writing-mode: vertical-rl;
+      pointer-events: none;
+    }
+
+    .prism-face.is-active {
+      opacity: 1;
+      filter: none;
+      box-shadow:
+        inset 1px 0 0 rgba(244,239,230,.14),
+        inset -1px 0 0 rgba(0,0,0,.28),
+        0 24px 80px rgba(0,0,0,.36),
+        0 0 0 1px color-mix(in srgb, var(--accent) 38%, transparent);
+    }
+
+    .prism-face.priority-1 {
+      background:
+        linear-gradient(90deg, rgba(184,74,66,.18), transparent 12%, transparent 88%, rgba(0,0,0,.22)),
+        linear-gradient(180deg, rgba(35,24,21,.96), rgba(14,12,11,.9));
+    }
+
+    .prism-face.priority-3 {
+      background:
+        linear-gradient(90deg, rgba(244,239,230,.045), transparent 12%, transparent 88%, rgba(0,0,0,.18)),
+        linear-gradient(180deg, rgba(22,21,20,.86), rgba(13,12,11,.82));
+    }
+
+    .file-pin {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 34px;
+      height: 6px;
+      border-radius: 99px;
+      background: color-mix(in srgb, var(--accent) 68%, rgba(244,239,230,.48));
+      box-shadow: 0 0 26px color-mix(in srgb, var(--accent) 34%, transparent);
+      opacity: .82;
+    }
+
+    .event-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(244,239,230,.64);
+      font-size: .95rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .event-meta::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      border-radius: 99px;
+      background: var(--accent);
+      box-shadow: 0 0 0 8px var(--accent-soft);
+    }
+
+    .prism-face h3 {
+      margin: 18px 0 18px;
+      font-size: clamp(2rem, 5.6vw, 5.3rem);
+      line-height: .95;
+      letter-spacing: -.08em;
+      color: var(--paper);
+      transform: translateZ(1px);
+    }
+
+    .prism-face.priority-1 h3 { font-size: clamp(2.4rem, 6.6vw, 6.2rem); }
+
+    .event-copy {
+      max-width: 720px;
+      margin: 0;
+      color: rgba(244,239,230,.78);
+      font-size: clamp(1rem, 1.42vw, 1.13rem);
+      line-height: 1.95;
+      transform: translateZ(1px);
+    }
+
+    .ending-note {
+      max-width: 520px;
+      color: rgba(244,239,230,.62);
+      border-left: 3px solid rgba(244,239,230,.25);
+      padding-left: 16px;
+    }
+
+    .event-controls {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 0 clamp(20px, 4vw, 54px) 28px;
+    }
+
+    .arrow-group { display: flex; gap: 8px; }
+
+    .arrow-button {
+      border-radius: 99px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+    }
+
+    .mini-nav-wrap {
+      overflow-x: auto;
+      flex: 1;
+      padding: 12px 0;
+      scrollbar-width: none;
+    }
+    .mini-nav-wrap::-webkit-scrollbar { display: none; }
+
+    .mini-nav {
+      min-width: 760px;
+      display: grid;
+      grid-template-columns: repeat(9, minmax(78px, 1fr));
+      position: relative;
+      align-items: start;
+      gap: 0;
+    }
+
+    .mini-nav::before {
+      content: "";
+      position: absolute;
+      top: 22px;
+      left: 5%;
+      right: 5%;
+      height: 1px;
+      background: rgba(244,239,230,.25);
+    }
+
+    .nav-button {
+      position: relative;
+      z-index: 1;
+      border: 0;
+      background: transparent;
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+      color: rgba(244,239,230,.58);
+      padding: 0 2px;
+      min-height: 74px;
+    }
+
+    .nav-button:hover {
+      background: transparent;
+      transform: none;
+      color: rgba(244,239,230,.9);
+    }
+
+    .nav-dot {
+      width: 12px;
+      height: 12px;
+      margin-top: 16px;
+      border-radius: 999px;
+      background: rgba(244,239,230,.45);
+      box-shadow: 0 0 0 6px rgba(244,239,230,.05);
+      transition: .25s ease;
+    }
+
+    .nav-button.is-active .nav-dot {
+      width: 18px;
+      height: 18px;
+      margin-top: 13px;
+      background: var(--accent);
+      box-shadow: 0 0 0 8px var(--accent-soft), 0 0 26px rgba(184,74,66,.42);
+    }
+
+    .nav-date {
+      font-size: .78rem;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .nav-title {
+      font-size: .75rem;
+      line-height: 1.2;
+      color: rgba(244,239,230,.46);
+    }
+
+    .nav-button.is-active .nav-date,
+    .nav-button.is-active .nav-title { color: var(--paper); }
+
+    .rotate-status {
+      position: absolute;
+      left: clamp(20px, 4vw, 54px);
+      bottom: 104px;
+      z-index: 4;
+      color: rgba(244,239,230,.48);
+      font-size: .82rem;
+      letter-spacing: .08em;
+      pointer-events: none;
+    }
+
+    @media (max-width: 860px) {
+      :root { --face-w: min(620px, 76vw); --face-h: 510px; }
+      .page { width: min(100% - 22px, var(--max)); padding-top: 4vh; }
+      .collapsed-panel { min-height: auto; padding: 32px 18px; border-radius: 24px; }
+      .module-title { font-size: clamp(1.22rem, 5vw, 1.55rem); }
+      .compact-track { min-width: 900px; }
+      .expanded-panel { min-height: 760px; }
+      .expanded-topbar { flex-direction: column; padding: 26px 18px 0; }
+      .collapse-button { align-self: flex-start; }
+      .stage { padding-top: 22px; }
+      .prism-shell { height: 600px; perspective: 1250px; }
+      .prism-face { padding: 28px 22px; }
+      .prism-face h3 { font-size: clamp(2rem, 12vw, 4.1rem); }
+      .event-controls { flex-direction: column-reverse; align-items: stretch; padding-inline: 18px; }
+      .arrow-group { justify-content: center; }
+      .mini-nav { min-width: 820px; }
+      .expanded-background::before { font-size: 26vw; inset: auto auto 6vh -3vw; }
+      .rotate-status { left: 18px; bottom: 140px; }
+    }
+
+    @media (max-width: 560px) {
+      .prism-shell {
+        height: auto;
+        min-height: 0;
+        overflow-x: auto;
+        perspective: none;
+        cursor: auto;
+        padding: 0 18px 14px;
+        touch-action: pan-x pan-y;
+      }
+
+      .prism-halo { display: none; }
+
+      .prism-carousel {
+        position: static;
+        width: max-content;
+        height: auto;
+        display: flex;
+        gap: 14px;
+        transform: none !important;
+        transition: none;
+        margin: 0;
+      }
+
+      .prism-face {
+        position: relative;
+        flex: 0 0 86vw;
+        min-height: 500px;
+        transform: none !important;
+        opacity: .58;
+        filter: none;
+        backface-visibility: visible;
+      }
+
+      .prism-face.is-active { opacity: 1; }
+      .rotate-status { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+      .prism-carousel { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="timeline-module" id="timelineModule" aria-label="白色恐怖大事記時間軸">
+      <div class="collapsed-panel" id="collapsedPanel">
+        <div>
+          <h2 class="module-title">白色恐怖大事記　Timeline：1949至今</h2>
+          <p class="module-deck">白色恐怖的歷史脈絡，從戒嚴體制、校園與地方政治案件，延伸至民主化後的法律修正與記憶工作。</p>
+        </div>
+
+        <div class="compact-timeline" aria-label="簡版時間軸，可左右滑動瀏覽">
+          <div class="compact-track" id="compactTrack"></div>
+        </div>
+
+        <div class="expand-row">
+          <button class="expand-button" id="expandButton" type="button" aria-expanded="false" aria-controls="expandedPanel">
+            點擊展開了解更多 <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="expanded-panel" id="expandedPanel" aria-hidden="true">
+        <div class="expanded-background" id="expandedBackground"></div>
+        <div class="expanded-topbar">
+          <div>
+            <h2>白色恐怖大事記　Timeline：1949至今</h2>
+            <p class="expanded-hint">左右拖曳或點選下方節點，九張檔案卡會像九角柱一樣轉動；背景視覺會隨事件切換。</p>
+          </div>
+          <button class="collapse-button" id="collapseButton" type="button">收起時間軸</button>
+        </div>
+
+        <div class="stage">
+          <div class="prism-shell" id="prismShell" aria-label="九角柱式詳細事件卡，可拖曳旋轉瀏覽">
+            <div class="prism-halo" aria-hidden="true"></div>
+            <div class="prism-carousel" id="prismCarousel"></div>
+          </div>
+          <div class="rotate-status" id="rotateStatus">01 / 09</div>
+        </div>
+
+        <div class="event-controls">
+          <div class="mini-nav-wrap" aria-label="事件節點導覽">
+            <div class="mini-nav" id="miniNav"></div>
+          </div>
+          <div class="arrow-group" aria-label="切換事件">
+            <button class="arrow-button" id="prevButton" type="button" aria-label="上一個事件">←</button>
+            <button class="arrow-button" id="nextButton" type="button" aria-label="下一個事件">→</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const events = [
+      {
+        date: "1949年",
+        shortDate: "1949",
+        title: "白恐開始",
+        fullTitle: "白色恐怖開始",
+        importance: 2,
+        bgText: "1949",
+        accent: "#b84a42",
+        bgA: "#21130f",
+        bgB: "#0d0d0c",
+        spotX: "18%",
+        spotY: "22%",
+        image: "",
+        content: "中華民國頒佈《臺灣省戒嚴令》，並施行《懲治叛亂條例》。"
+      },
+      {
+        date: "1949年4月6日",
+        shortDate: "1949.04.06",
+        title: "四六事件",
+        fullTitle: "四六事件",
+        importance: 2,
+        bgText: "04.06",
+        accent: "#a9543f",
+        bgA: "#1e1b17",
+        bgB: "#11100f",
+        spotX: "26%",
+        spotY: "30%",
+        image: "",
+        content: "臺灣省警備總司令部派遣軍警進入臺灣省立師範學院及國立臺灣大學，逮捕涉嫌「張貼標語，散發傳單，煽惑人心，擾亂秩序，妨害治安，搗毀公署，私擅拘禁執行公務之人員，居心叵測」之學生，可謂校園白色恐怖的開始。"
+      },
+      {
+        date: "1952年",
+        shortDate: "1952",
+        title: "鹿窟事件",
+        fullTitle: "鹿窟事件",
+        importance: 2,
+        bgText: "1952",
+        accent: "#92704b",
+        bgA: "#1d1b12",
+        bgB: "#0f1110",
+        spotX: "72%",
+        spotY: "28%",
+        image: "",
+        content: "逃亡的中國共產黨地下黨員躲藏於鹿窟山區，並吸收部分當地村民組成「台灣人民武裝保衛隊」。後遭政府軍隊嚴刑拷打，估計150名農民、礦工遭判刑與感訓，其中37人遭槍決死刑，98人入獄，導致該山村幾乎滅村。"
+      },
+      {
+        date: "1979年",
+        shortDate: "1979",
+        title: "美麗島",
+        fullTitle: "美麗島事件",
+        importance: 3,
+        bgText: "1979",
+        accent: "#7c6859",
+        bgA: "#1a1715",
+        bgB: "#10100f",
+        spotX: "62%",
+        spotY: "72%",
+        image: "",
+        content: "《美麗島》雜誌社在高雄舉行世界人權日紀念日大會，未獲批准，但全臺黨外人士如施明德、呂秀蓮及陳菊等人，仍照計劃至高雄參加紀念活動，遭部隊鎮壓。"
+      },
+      {
+        date: "1991年5月9日",
+        shortDate: "1991.05.09",
+        title: "獨台會案",
+        fullTitle: "獨台會案",
+        importance: 1,
+        bgText: "1991",
+        accent: "#d55a4d",
+        bgA: "#27120f",
+        bgB: "#10100f",
+        spotX: "28%",
+        spotY: "34%",
+        image: "",
+        content: "法務部調查局進入清華大學校園拘捕歷史研究所學生廖偉程與數名人士，引發全臺各大學生罷課抗議，促成政府廢除《戡亂時期檢肅匪諜條例》。"
+      },
+      {
+        date: "1991年5月22日",
+        shortDate: "1991.05.22",
+        title: "狹義結束",
+        fullTitle: "（狹義）白色恐怖結束",
+        importance: 2,
+        bgText: "05.22",
+        accent: "#b67a4e",
+        bgA: "#1e1710",
+        bgB: "#11100f",
+        spotX: "74%",
+        spotY: "36%",
+        image: "",
+        content: "廢除《戡亂時期檢肅匪諜條例》，38年的戒嚴結束。"
+      },
+      {
+        date: "1992年",
+        shortDate: "1992",
+        title: "廣義結束",
+        fullTitle: "（廣義）白色恐怖結束",
+        importance: 1,
+        bgText: "1992",
+        accent: "#d65e50",
+        bgA: "#241512",
+        bgB: "#0e0f10",
+        spotX: "20%",
+        spotY: "62%",
+        image: "",
+        content: "由林山田、李鎮源、鍾肇政、陳傳岳等十人共同發起「一〇〇行動聯盟」，各界合力促成立法院修正《中華民國刑法》第一百條。"
+      },
+      {
+        date: "2024年",
+        shortDate: "2024",
+        title: "記憶日",
+        fullTitle: "制定白色恐怖記憶日",
+        importance: 3,
+        bgText: "2024",
+        accent: "#8a6d58",
+        bgA: "#191716",
+        bgB: "#0d0e0f",
+        spotX: "62%",
+        spotY: "32%",
+        image: "",
+        content: "行政院核定每年5月19日為「白色恐怖記憶日」，使白恐記憶以公共紀念形式被重新標記。"
+      },
+      {
+        date: "2026年至今",
+        shortDate: "2026",
+        title: "至今",
+        fullTitle: "記憶工作持續進行",
+        importance: 2,
+        bgText: "至今",
+        accent: "#9b8a76",
+        bgA: "#181818",
+        bgB: "#0d0d0d",
+        spotX: "76%",
+        spotY: "68%",
+        image: "",
+        content: ""
+      }
+    ];
+
+    const moduleEl = document.getElementById("timelineModule");
+    const compactTrack = document.getElementById("compactTrack");
+    const expandButton = document.getElementById("expandButton");
+    const collapseButton = document.getElementById("collapseButton");
+    const expandedPanel = document.getElementById("expandedPanel");
+    const prismShell = document.getElementById("prismShell");
+    const prismCarousel = document.getElementById("prismCarousel");
+    const miniNav = document.getElementById("miniNav");
+    const prevButton = document.getElementById("prevButton");
+    const nextButton = document.getElementById("nextButton");
+    const rotateStatus = document.getElementById("rotateStatus");
+
+    const step = 360 / events.length;
+    let activeIndex = 0;
+    let currentRotation = 0;
+    let dragStartX = 0;
+    let dragStartRotation = 0;
+    let isDragging = false;
+
+    function createCompactTimeline() {
+      compactTrack.innerHTML = "";
+      events.forEach((event, index) => {
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = `compact-item priority-${event.importance}`;
+        item.setAttribute("aria-label", `展開並查看 ${event.date} ${event.fullTitle}`);
+        item.innerHTML = `
+          <div class="compact-date">${event.shortDate}</div>
+          <div class="compact-dot" aria-hidden="true"></div>
+          <div class="compact-label">${event.title}</div>
+        `;
+        item.style.border = "0";
+        item.style.background = "transparent";
+        item.style.cursor = "pointer";
+        item.addEventListener("click", () => openTimeline(index));
+        compactTrack.appendChild(item);
+      });
+    }
+
+    function createPrismTimeline() {
+      prismCarousel.innerHTML = "";
+      miniNav.innerHTML = "";
+
+      events.forEach((event, index) => {
+        const face = document.createElement("article");
+        face.className = `prism-face priority-${event.importance}`;
+        face.dataset.index = index;
+        face.style.transform = `rotateY(${index * step}deg) translateZ(var(--radius))`;
+        face.setAttribute("aria-labelledby", `event-title-${index}`);
+
+        const content = event.content
+          ? `<p class="event-copy">${event.content}</p>`
+          : ``;
+
+        face.innerHTML = `
+          <div class="file-pin" aria-hidden="true"></div>
+          <div class="event-meta">${event.date}</div>
+          <h3 id="event-title-${index}">${event.fullTitle}</h3>
+          ${content}
+        `;
+        prismCarousel.appendChild(face);
+
+        const navButton = document.createElement("button");
+        navButton.type = "button";
+        navButton.className = "nav-button";
+        navButton.dataset.index = index;
+        navButton.setAttribute("aria-label", `跳到 ${event.date} ${event.fullTitle}`);
+        navButton.innerHTML = `
+          <span class="nav-dot" aria-hidden="true"></span>
+          <span class="nav-date">${event.shortDate}</span>
+          <span class="nav-title">${event.title}</span>
+        `;
+        navButton.addEventListener("click", () => goToEvent(index));
+        miniNav.appendChild(navButton);
+      });
+
+      updateRadius();
+      updateActiveEvent(0, true);
+    }
+
+    function updateRadius() {
+      const face = prismCarousel.querySelector(".prism-face");
+      if (!face) return;
+      const width = face.getBoundingClientRect().width || 700;
+      const radius = (width / 2) / Math.tan(Math.PI / events.length);
+      moduleEl.style.setProperty("--radius", `${Math.round(radius)}px`);
+    }
+
+    function openTimeline(index = 0) {
+      moduleEl.classList.add("is-expanded");
+      expandButton.setAttribute("aria-expanded", "true");
+      expandedPanel.setAttribute("aria-hidden", "false");
+      requestAnimationFrame(() => {
+        updateRadius();
+        goToEvent(index, true);
+        moduleEl.scrollIntoView({ block: "start", behavior: "smooth" });
+      });
+    }
+
+    function closeTimeline() {
+      moduleEl.classList.remove("is-expanded");
+      expandButton.setAttribute("aria-expanded", "false");
+      expandedPanel.setAttribute("aria-hidden", "true");
+      moduleEl.scrollIntoView({ block: "center", behavior: "smooth" });
+      setTimeout(() => expandButton.focus(), 220);
+    }
+
+    function setCarouselRotation(rotation) {
+      currentRotation = rotation;
+      prismCarousel.style.transform = `translate(-50%, -50%) translateZ(calc(var(--radius) * -1)) rotateY(${rotation}deg)`;
+    }
+
+    function goToEvent(index, instant = false) {
+      const normalized = Math.max(0, Math.min(events.length - 1, index));
+      if (instant) prismCarousel.style.transition = "none";
+      updateActiveEvent(normalized);
+      setCarouselRotation(-normalized * step);
+      if (instant) {
+        requestAnimationFrame(() => { prismCarousel.style.transition = ""; });
+      }
+    }
+
+    function updateActiveEvent(index) {
+      activeIndex = Math.max(0, Math.min(events.length - 1, index));
+      const event = events[activeIndex];
+      moduleEl.style.setProperty("--accent", event.accent);
+      moduleEl.style.setProperty("--accent-soft", `${event.accent}33`);
+      moduleEl.style.setProperty("--bg-a", event.bgA);
+      moduleEl.style.setProperty("--bg-b", event.bgB);
+      moduleEl.style.setProperty("--spot-x", event.spotX);
+      moduleEl.style.setProperty("--spot-y", event.spotY);
+      moduleEl.style.setProperty("--ghost", `"${event.bgText}"`);
+      moduleEl.style.setProperty("--event-image", event.image ? `url("${event.image}")` : "none");
+
+      prismCarousel.querySelectorAll(".prism-face").forEach((face, i) => {
+        face.classList.toggle("is-active", i === activeIndex);
+      });
+      miniNav.querySelectorAll(".nav-button").forEach((button, i) => {
+        button.classList.toggle("is-active", i === activeIndex);
+        if (i === activeIndex) button.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+      });
+      prevButton.disabled = activeIndex === 0;
+      nextButton.disabled = activeIndex === events.length - 1;
+      prevButton.style.opacity = prevButton.disabled ? .42 : 1;
+      nextButton.style.opacity = nextButton.disabled ? .42 : 1;
+      rotateStatus.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(events.length).padStart(2, "0")}`;
+    }
+
+    function nearestIndexFromRotation(rotation) {
+      const raw = -rotation / step;
+      return Math.max(0, Math.min(events.length - 1, Math.round(raw)));
+    }
+
+    function handleDragMove(clientX) {
+      const dx = clientX - dragStartX;
+      const sensitivity = 0.13;
+      const rotation = dragStartRotation + dx * sensitivity;
+      const minRotation = -(events.length - 1) * step;
+      const maxRotation = 0;
+      const resisted = Math.max(minRotation - 12, Math.min(maxRotation + 12, rotation));
+      setCarouselRotation(resisted);
+      const previewIndex = nearestIndexFromRotation(resisted);
+      if (previewIndex !== activeIndex) updateActiveEvent(previewIndex);
+    }
+
+    prismShell.addEventListener("pointerdown", (event) => {
+      if (window.matchMedia("(max-width: 560px)").matches) return;
+      isDragging = true;
+      dragStartX = event.clientX;
+      dragStartRotation = currentRotation;
+      prismShell.classList.add("is-dragging");
+      prismShell.setPointerCapture(event.pointerId);
+    });
+
+    prismShell.addEventListener("pointermove", (event) => {
+      if (!isDragging) return;
+      handleDragMove(event.clientX);
+    });
+
+    function endDrag() {
+      if (!isDragging) return;
+      isDragging = false;
+      prismShell.classList.remove("is-dragging");
+      const snapIndex = nearestIndexFromRotation(currentRotation);
+      goToEvent(snapIndex);
+    }
+
+    prismShell.addEventListener("pointerup", endDrag);
+    prismShell.addEventListener("pointercancel", endDrag);
+    prismShell.addEventListener("lostpointercapture", endDrag);
+
+    expandButton.addEventListener("click", () => openTimeline(0));
+    collapseButton.addEventListener("click", closeTimeline);
+    prevButton.addEventListener("click", () => goToEvent(activeIndex - 1));
+    nextButton.addEventListener("click", () => goToEvent(activeIndex + 1));
+
+    document.addEventListener("keydown", (event) => {
+      if (!moduleEl.classList.contains("is-expanded")) return;
+      if (event.key === "Escape") closeTimeline();
+      if (event.key === "ArrowRight") goToEvent(activeIndex + 1);
+      if (event.key === "ArrowLeft") goToEvent(activeIndex - 1);
+    });
+
+    window.addEventListener("resize", () => {
+      updateRadius();
+      goToEvent(activeIndex, true);
+    });
+
+    createCompactTimeline();
+    createPrismTimeline();
+  </script>
+</body>
+</html>
