@@ -740,6 +740,7 @@
         spotX: "18%",
         spotY: "22%",
         image: "images/1949-white-terror-start.jpg",
+        imageSource: "維基百科",
         content: "中華民國頒佈《臺灣省戒嚴令》，並施行《懲治叛亂條例》。"
       },
       {
@@ -755,6 +756,7 @@
         spotX: "26%",
         spotY: "30%",
         image: "images/1949-april-sixth.jpeg",
+        imageSource: "新台灣和平基金會",
         content: "臺灣省警備總司令部派遣軍警進入臺灣省立師範學院及國立臺灣大學，逮捕涉嫌「張貼標語，散發傳單，煽惑人心，擾亂秩序，妨害治安，搗毀公署，私擅拘禁執行公務之人員，居心叵測」之學生，可謂校園白色恐怖的開始。"
       },
       {
@@ -770,6 +772,7 @@
         spotX: "72%",
         spotY: "28%",
         image: "images/1952-luku.jpeg",
+        imageSource: "國家人權記憶庫",
         content: "逃亡的中國共產黨地下黨員躲藏於鹿窟山區，並吸收部分當地村民組成「台灣人民武裝保衛隊」。後遭政府軍隊嚴刑拷打，估計150名農民、礦工遭判刑與感訓，其中37人遭槍決死刑，98人入獄，導致該山村幾乎滅村。"
       },
       {
@@ -784,7 +787,8 @@
         bgB: "#10100f",
         spotX: "62%",
         spotY: "72%",
-        image: "",
+        image: "images/1979-kaohsiung-incident.jpg",
+        imageSource: "維基百科",
         content: "《美麗島》雜誌社在高雄舉行世界人權日紀念日大會，未獲批准，但全臺黨外人士如施明德、呂秀蓮及陳菊等人，仍照計劃至高雄參加紀念活動，遭部隊鎮壓。"
       },
       {
@@ -799,7 +803,8 @@
         bgB: "#10100f",
         spotX: "28%",
         spotY: "34%",
-        image: "",
+        image: "images/1991-independence-association.jpg",
+        imageSource: "新台灣和平基金會",
         content: "法務部調查局進入清華大學校園拘捕歷史研究所學生廖偉程與數名人士，引發全臺各大學生罷課抗議，促成政府廢除《戡亂時期檢肅匪諜條例》。"
       },
       {
@@ -814,7 +819,8 @@
         bgB: "#11100f",
         spotX: "74%",
         spotY: "36%",
-        image: "",
+        image: "images/1991-narrow-end.jpg",
+        imageSource: "中華民國總統府公報",
         content: "廢除《戡亂時期檢肅匪諜條例》，38年的戒嚴結束。"
       },
       {
@@ -829,7 +835,8 @@
         bgB: "#0e0f10",
         spotX: "20%",
         spotY: "62%",
-        image: "",
+        image: "images/1992-broad-end.jpg",
+        imageSource: "100行動聯盟30週年",
         content: "由林山田、李鎮源、鍾肇政、陳傳岳等十人共同發起「一〇〇行動聯盟」，各界合力促成立法院修正《中華民國刑法》第一百條。"
       },
       {
@@ -844,7 +851,8 @@
         bgB: "#0d0e0f",
         spotX: "62%",
         spotY: "32%",
-        image: "",
+        image: "images/2024-memory-day.jpg",
+        imageSource: "新台灣和平基金會",
         content: "行政院核定每年5月19日為「白色恐怖記憶日」，使白恐記憶以公共紀念形式被重新標記。"
       },
       {
@@ -860,6 +868,7 @@
         spotX: "76%",
         spotY: "68%",
         image: "",
+        imageSource: "",
         content: ""
       }
     ];
@@ -919,7 +928,7 @@
           : ``;
 
         const media = event.image
-          ? `<figure style="margin: 0 0 18px;"><img src="${event.image}" alt="${event.fullTitle}相關圖片" loading="lazy" style="display:block;width:100%;height:180px;object-fit:cover;border-radius:6px;border:1px solid rgba(244,239,230,.12);" /></figure>`
+          ? `<figure style="position:relative;margin:0 0 18px;"><img src="${event.image}" alt="${event.fullTitle}相關圖片" loading="lazy" style="display:block;width:100%;height:180px;object-fit:cover;border-radius:6px;border:1px solid rgba(244,239,230,.12);" />${event.imageSource ? `<figcaption style="position:absolute;right:10px;bottom:10px;padding:4px 8px;border-radius:999px;background:rgba(17,16,15,.82);border:1px solid rgba(244,239,230,.16);color:rgba(244,239,230,.82);font-size:.72rem;line-height:1.2;letter-spacing:.02em;">圖片來源｜${event.imageSource}</figcaption>` : ``}</figure>`
           : ``;
 
         face.innerHTML = `
