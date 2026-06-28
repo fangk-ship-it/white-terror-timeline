@@ -739,7 +739,7 @@
         bgB: "#0d0d0c",
         spotX: "18%",
         spotY: "22%",
-        image: "",
+        image: "images/1949-white-terror-start.jpg",
         content: "中華民國頒佈《臺灣省戒嚴令》，並施行《懲治叛亂條例》。"
       },
       {
@@ -754,7 +754,7 @@
         bgB: "#11100f",
         spotX: "26%",
         spotY: "30%",
-        image: "",
+        image: "images/1949-april-sixth.jpeg",
         content: "臺灣省警備總司令部派遣軍警進入臺灣省立師範學院及國立臺灣大學，逮捕涉嫌「張貼標語，散發傳單，煽惑人心，擾亂秩序，妨害治安，搗毀公署，私擅拘禁執行公務之人員，居心叵測」之學生，可謂校園白色恐怖的開始。"
       },
       {
@@ -769,7 +769,7 @@
         bgB: "#0f1110",
         spotX: "72%",
         spotY: "28%",
-        image: "",
+        image: "images/1952-luku.jpeg",
         content: "逃亡的中國共產黨地下黨員躲藏於鹿窟山區，並吸收部分當地村民組成「台灣人民武裝保衛隊」。後遭政府軍隊嚴刑拷打，估計150名農民、礦工遭判刑與感訓，其中37人遭槍決死刑，98人入獄，導致該山村幾乎滅村。"
       },
       {
@@ -918,10 +918,15 @@
           ? `<p class="event-copy">${event.content}</p>`
           : ``;
 
+        const media = event.image
+          ? `<figure style="margin: 0 0 18px;"><img src="${event.image}" alt="${event.fullTitle}相關圖片" loading="lazy" style="display:block;width:100%;height:180px;object-fit:cover;border-radius:6px;border:1px solid rgba(244,239,230,.12);" /></figure>`
+          : ``;
+
         face.innerHTML = `
           <div class="file-pin" aria-hidden="true"></div>
           <div class="event-meta">${event.date}</div>
           <h3 id="event-title-${index}">${event.fullTitle}</h3>
+          ${media}
           ${content}
         `;
         prismCarousel.appendChild(face);
