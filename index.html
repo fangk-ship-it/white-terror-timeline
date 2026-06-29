@@ -154,7 +154,7 @@
       position: sticky;
       top: 0;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      grid-template-columns: minmax(220px, 1fr) minmax(0, 4fr);
       gap: clamp(26px, 3.5vw, 52px);
       align-items: start;
       height: 100vh;
@@ -191,7 +191,7 @@
     .intro-copy-card {
       position: absolute;
       inset: 0 auto auto 0;
-      width: min(100%, 420px);
+      width: min(100%, 300px);
       padding: 0;
       border: 0;
       background: transparent;
@@ -203,19 +203,21 @@
     .intro-copy-card p {
       margin: 0;
       color: rgba(64, 54, 44, 0.96);
-      font-size: clamp(1rem, 1.16vw, 1.08rem);
-      line-height: 2.08;
+      font-size: clamp(0.95rem, 0.96vw, 1.02rem);
+      line-height: 2.02;
     }
 
     .intro-copy-card p + p {
-      margin-top: 22px;
+      margin-top: 20px;
     }
 
     .intro-timeline-card {
+      position: relative;
+      isolation: isolate;
       display: grid;
       grid-template-rows: auto 1fr auto;
       gap: clamp(22px, 3vw, 34px);
-      padding: clamp(28px, 3.5vw, 40px);
+      padding: clamp(30px, 3.8vw, 44px);
       border-radius: 26px;
       border: 1px solid rgba(255, 255, 255, 0.12);
       background:
@@ -227,9 +229,41 @@
       overflow: hidden;
     }
 
+    .intro-timeline-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(184, 74, 66, 0.13), transparent 22%),
+        radial-gradient(circle at 82% 78%, rgba(244, 239, 230, 0.07), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 42%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .intro-timeline-card::after {
+      content: "1949 至今";
+      position: absolute;
+      right: clamp(20px, 3vw, 32px);
+      bottom: clamp(10px, 1.4vw, 22px);
+      font-size: clamp(4.6rem, 12vw, 10.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.1em;
+      font-weight: 900;
+      color: rgba(244, 239, 230, 0.05);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .intro-timeline-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
     .module-title {
       margin: 0;
-      font-size: clamp(1.25rem, 2.2vw, 1.68rem);
+      font-size: clamp(1.36rem, 2.4vw, 1.92rem);
       line-height: 1.35;
       letter-spacing: 0.02em;
       font-weight: 850;
@@ -238,16 +272,16 @@
 
     .module-deck {
       margin: 18px 0 0;
-      max-width: 680px;
+      max-width: 760px;
       color: rgba(244, 239, 230, 0.7);
-      font-size: clamp(0.98rem, 1.5vw, 1.15rem);
+      font-size: clamp(1.02rem, 1.56vw, 1.18rem);
     }
 
     .intro-timeline-window {
       position: relative;
       align-self: center;
       overflow: hidden;
-      padding: 12px 0 6px;
+      padding: 18px 0 12px;
     }
 
     .intro-timeline-window::before,
@@ -275,18 +309,18 @@
       position: relative;
       width: 100%;
       overflow: hidden;
-      padding: 4px 0 10px;
+      padding: 12px 0 16px;
       scrollbar-width: none;
     }
 
     .compact-track {
-      min-width: 940px;
+      min-width: 3060px;
       position: relative;
       display: grid;
-      grid-template-columns: repeat(9, minmax(86px, 1fr));
+      grid-template-columns: repeat(9, minmax(340px, 1fr));
       gap: 0;
       align-items: start;
-      padding: 0 4px;
+      padding: 0 8px;
       transform: translateX(var(--intro-track-shift, 0px));
       transition: transform 180ms linear;
       will-change: transform;
@@ -295,9 +329,9 @@
     .compact-track::before {
       content: "";
       position: absolute;
-      left: 5.6%;
-      right: 5.6%;
-      top: 76px;
+      left: 6.8%;
+      right: 6.8%;
+      top: 98px;
       height: 2px;
       background: linear-gradient(90deg, transparent, rgba(244, 239, 230, 0.56), transparent);
     }
@@ -311,7 +345,7 @@
       --compact-dot-color: var(--priority-2-compact-dot-color);
       --compact-dot-shadow: var(--priority-2-compact-dot-shadow);
       position: relative;
-      min-height: 142px;
+      min-height: 188px;
       padding: 0;
       border: 0;
       background: transparent;
@@ -354,13 +388,13 @@
     }
 
     .compact-date {
-      min-height: 44px;
+      min-height: 56px;
       display: flex;
       align-items: flex-end;
       justify-content: center;
       padding: 0 5px;
       font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 1.08rem;
       line-height: 1.2;
       color: var(--compact-text-color);
       transition: color 0.25s ease;
@@ -381,7 +415,7 @@
     .compact-label {
       width: 100%;
       padding: 0 4px;
-      font-size: 0.88rem;
+      font-size: 1rem;
       font-weight: 600;
       line-height: 1.35;
       color: var(--compact-label-color);
@@ -1517,7 +1551,10 @@
       const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 1);
       const panelRect = DOM.collapsedPanel.getBoundingClientRect();
       const progress = clamp(-panelRect.top / scrollSpan, 0, 1);
-      const copyTravel = Math.max(DOM.introCopyRail.clientHeight - DOM.introCopyCard.offsetHeight, 0);
+      const copyTravel = Math.max(
+        DOM.introCopyRail.clientHeight - DOM.introCopyCard.offsetHeight,
+        Math.min(window.innerHeight * 0.34, 280)
+      );
       const trackTravel = Math.max(DOM.compactTrack.scrollWidth - DOM.compactTimeline.clientWidth, 0);
       const targetIndex = Math.round(progress * (events.length - 1));
 
