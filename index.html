@@ -38,10 +38,10 @@
       --priority-1-compact-opacity: 1;
       --priority-1-compact-text-color: var(--paper);
       --priority-1-compact-label-color: var(--paper);
-      --priority-1-compact-dot-size: 20px;
-      --priority-1-compact-dot-margin-top: 21px;
+      --priority-1-compact-dot-size: 26px;
+      --priority-1-compact-dot-margin-top: 24px;
       --priority-1-compact-dot-color: var(--accent);
-      --priority-1-compact-dot-shadow: 0 0 0 9px rgba(184, 74, 66, 0.18), 0 0 28px rgba(184, 74, 66, 0.48);
+      --priority-1-compact-dot-shadow: 0 0 0 11px rgba(184, 74, 66, 0.18), 0 0 34px rgba(184, 74, 66, 0.5);
       --priority-1-nav-dot-size: 14px;
       --priority-1-nav-dot-color: rgba(244, 239, 230, 0.52);
       --priority-1-title-size: clamp(2.4rem, 6.6vw, 6.2rem);
@@ -49,10 +49,10 @@
       --priority-2-compact-opacity: 1;
       --priority-2-compact-text-color: rgba(244, 239, 230, 0.78);
       --priority-2-compact-label-color: rgba(244, 239, 230, 0.7);
-      --priority-2-compact-dot-size: 13px;
-      --priority-2-compact-dot-margin-top: 25px;
+      --priority-2-compact-dot-size: 18px;
+      --priority-2-compact-dot-margin-top: 28px;
       --priority-2-compact-dot-color: rgba(244, 239, 230, 0.82);
-      --priority-2-compact-dot-shadow: 0 0 0 7px rgba(244, 239, 230, 0.07);
+      --priority-2-compact-dot-shadow: 0 0 0 8px rgba(244, 239, 230, 0.08);
       --priority-2-nav-dot-size: 12px;
       --priority-2-nav-dot-color: rgba(244, 239, 230, 0.45);
       --priority-2-title-size: clamp(2rem, 5.6vw, 5.3rem);
@@ -60,10 +60,10 @@
       --priority-3-compact-opacity: 0.68;
       --priority-3-compact-text-color: rgba(244, 239, 230, 0.72);
       --priority-3-compact-label-color: rgba(244, 239, 230, 0.62);
-      --priority-3-compact-dot-size: 10px;
-      --priority-3-compact-dot-margin-top: 26px;
+      --priority-3-compact-dot-size: 14px;
+      --priority-3-compact-dot-margin-top: 30px;
       --priority-3-compact-dot-color: rgba(244, 239, 230, 0.58);
-      --priority-3-compact-dot-shadow: 0 0 0 6px rgba(244, 239, 230, 0.04);
+      --priority-3-compact-dot-shadow: 0 0 0 6px rgba(244, 239, 230, 0.05);
       --priority-3-nav-dot-size: 10px;
       --priority-3-nav-dot-color: rgba(244, 239, 230, 0.36);
       --priority-3-title-size: clamp(1.9rem, 5vw, 5rem);
@@ -186,12 +186,13 @@
     .intro-copy-rail {
       position: relative;
       width: 100%;
+      overflow: hidden;
     }
 
     .intro-copy-card {
       position: absolute;
       inset: 0 auto auto 0;
-      width: min(100%, 300px);
+      width: min(100%, 228px);
       padding: 0;
       border: 0;
       background: transparent;
@@ -203,12 +204,13 @@
     .intro-copy-card p {
       margin: 0;
       color: rgba(64, 54, 44, 0.96);
-      font-size: clamp(0.95rem, 0.96vw, 1.02rem);
-      line-height: 2.02;
+      font-size: clamp(1.22rem, 1.34vw, 1.4rem);
+      line-height: 2.22;
+      font-weight: 500;
     }
 
     .intro-copy-card p + p {
-      margin-top: 20px;
+      margin-top: 28px;
     }
 
     .intro-timeline-card {
@@ -331,7 +333,7 @@
       position: absolute;
       left: 6.8%;
       right: 6.8%;
-      top: 98px;
+      top: 116px;
       height: 2px;
       background: linear-gradient(90deg, transparent, rgba(244, 239, 230, 0.56), transparent);
     }
@@ -345,7 +347,7 @@
       --compact-dot-color: var(--priority-2-compact-dot-color);
       --compact-dot-shadow: var(--priority-2-compact-dot-shadow);
       position: relative;
-      min-height: 188px;
+      min-height: 224px;
       padding: 0;
       border: 0;
       background: transparent;
@@ -388,14 +390,14 @@
     }
 
     .compact-date {
-      min-height: 56px;
+      min-height: 72px;
       display: flex;
       align-items: flex-end;
       justify-content: center;
       padding: 0 5px;
       font-weight: 800;
-      font-size: 1.08rem;
-      line-height: 1.2;
+      font-size: 1.34rem;
+      line-height: 1.15;
       color: var(--compact-text-color);
       transition: color 0.25s ease;
     }
@@ -406,7 +408,7 @@
       width: var(--compact-dot-size);
       height: var(--compact-dot-size);
       border-radius: 99px;
-      margin: var(--compact-dot-margin-top) auto 14px;
+      margin: var(--compact-dot-margin-top) auto 18px;
       background: var(--compact-dot-color);
       box-shadow: var(--compact-dot-shadow);
       transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
@@ -415,9 +417,9 @@
     .compact-label {
       width: 100%;
       padding: 0 4px;
-      font-size: 1rem;
-      font-weight: 600;
-      line-height: 1.35;
+      font-size: 1.18rem;
+      font-weight: 650;
+      line-height: 1.42;
       color: var(--compact-label-color);
       transition: color 0.25s ease;
     }
@@ -944,6 +946,10 @@
         transform: none;
       }
 
+      .intro-copy-rail {
+        overflow: visible;
+      }
+
       .intro-timeline-card {
         height: auto;
       }
@@ -1158,18 +1164,18 @@
         "--carousel-duration": "650ms",
         "--background-duration": "520ms",
         "--priority-1-compact-opacity": "1",
-        "--priority-1-compact-dot-size": "20px",
-        "--priority-1-compact-dot-margin-top": "21px",
+        "--priority-1-compact-dot-size": "26px",
+        "--priority-1-compact-dot-margin-top": "24px",
         "--priority-1-nav-dot-size": "14px",
         "--priority-1-title-size": "clamp(2.4rem, 6.6vw, 6.2rem)",
         "--priority-2-compact-opacity": "1",
-        "--priority-2-compact-dot-size": "13px",
-        "--priority-2-compact-dot-margin-top": "25px",
+        "--priority-2-compact-dot-size": "18px",
+        "--priority-2-compact-dot-margin-top": "28px",
         "--priority-2-nav-dot-size": "12px",
         "--priority-2-title-size": "clamp(2rem, 5.6vw, 5.3rem)",
         "--priority-3-compact-opacity": "0.68",
-        "--priority-3-compact-dot-size": "10px",
-        "--priority-3-compact-dot-margin-top": "26px",
+        "--priority-3-compact-dot-size": "14px",
+        "--priority-3-compact-dot-margin-top": "30px",
         "--priority-3-nav-dot-size": "10px",
         "--priority-3-title-size": "clamp(1.9rem, 5vw, 5rem)"
       },
@@ -1551,14 +1557,11 @@
       const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 1);
       const panelRect = DOM.collapsedPanel.getBoundingClientRect();
       const progress = clamp(-panelRect.top / scrollSpan, 0, 1);
-      const copyTravel = Math.max(
-        DOM.introCopyRail.clientHeight - DOM.introCopyCard.offsetHeight,
-        Math.min(window.innerHeight * 0.34, 280)
-      );
+      const copyTravel = Math.max(DOM.introCopyCard.offsetHeight - DOM.introCopyRail.clientHeight, 0);
       const trackTravel = Math.max(DOM.compactTrack.scrollWidth - DOM.compactTimeline.clientWidth, 0);
       const targetIndex = Math.round(progress * (events.length - 1));
 
-      DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * progress)}px`);
+      DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -progress)}px`);
       DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -progress)}px`);
 
       if (targetIndex !== state.activeIndex) {
