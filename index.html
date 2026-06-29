@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>白色恐怖大事記　Timeline：1949至今</title>
   <style>
+    /* ==============================
+       Module Tokens
+       調整尺寸、速度、層級差異時，優先看這一區
+    ============================== */
     :root {
       --bg: #11100f;
       --paper: #f4efe6;
@@ -16,42 +20,89 @@
       --accent-soft: rgba(184, 74, 66, 0.24);
       --panel: rgba(18, 17, 16, 0.84);
       --max: 1180px;
-      --shadow: 0 30px 90px rgba(0, 0, 0, .42);
+      --shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
       --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
       --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+
       --face-w: min(720px, 66vw);
       --face-h: 460px;
       --radius: 940px;
+      --carousel-duration: 650ms;
+      --background-duration: 520ms;
       --event-image: none;
+
+      --priority-1-compact-opacity: 1;
+      --priority-1-compact-text-color: var(--paper);
+      --priority-1-compact-label-color: var(--paper);
+      --priority-1-compact-dot-size: 20px;
+      --priority-1-compact-dot-margin-top: 21px;
+      --priority-1-compact-dot-color: var(--accent);
+      --priority-1-compact-dot-shadow: 0 0 0 9px rgba(184, 74, 66, 0.18), 0 0 28px rgba(184, 74, 66, 0.48);
+      --priority-1-nav-dot-size: 14px;
+      --priority-1-nav-dot-color: rgba(244, 239, 230, 0.52);
+      --priority-1-title-size: clamp(2.4rem, 6.6vw, 6.2rem);
+
+      --priority-2-compact-opacity: 1;
+      --priority-2-compact-text-color: rgba(244, 239, 230, 0.78);
+      --priority-2-compact-label-color: rgba(244, 239, 230, 0.7);
+      --priority-2-compact-dot-size: 13px;
+      --priority-2-compact-dot-margin-top: 25px;
+      --priority-2-compact-dot-color: rgba(244, 239, 230, 0.82);
+      --priority-2-compact-dot-shadow: 0 0 0 7px rgba(244, 239, 230, 0.07);
+      --priority-2-nav-dot-size: 12px;
+      --priority-2-nav-dot-color: rgba(244, 239, 230, 0.45);
+      --priority-2-title-size: clamp(2rem, 5.6vw, 5.3rem);
+
+      --priority-3-compact-opacity: 0.68;
+      --priority-3-compact-text-color: rgba(244, 239, 230, 0.72);
+      --priority-3-compact-label-color: rgba(244, 239, 230, 0.62);
+      --priority-3-compact-dot-size: 10px;
+      --priority-3-compact-dot-margin-top: 26px;
+      --priority-3-compact-dot-color: rgba(244, 239, 230, 0.58);
+      --priority-3-compact-dot-shadow: 0 0 0 6px rgba(244, 239, 230, 0.04);
+      --priority-3-nav-dot-size: 10px;
+      --priority-3-nav-dot-color: rgba(244, 239, 230, 0.36);
+      --priority-3-title-size: clamp(1.9rem, 5vw, 5rem);
     }
 
+    /* ==============================
+       Base
+    ============================== */
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       min-height: 100vh;
       color: var(--ink);
       font-family: var(--sans);
       background:
-        radial-gradient(circle at 20% 10%, rgba(156, 47, 42, .18), transparent 34vw),
-        radial-gradient(circle at 78% 82%, rgba(151, 119, 72, .13), transparent 38vw),
+        radial-gradient(circle at 20% 10%, rgba(156, 47, 42, 0.18), transparent 34vw),
+        radial-gradient(circle at 78% 82%, rgba(151, 119, 72, 0.13), transparent 38vw),
         linear-gradient(135deg, #0f0d0c 0%, #191613 50%, #0f0e0d 100%);
       line-height: 1.8;
     }
+
+    body.detail-open { overflow: hidden; }
 
     body::before {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: .23;
+      opacity: 0.23;
       background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
       background-size: 36px 36px;
       mix-blend-mode: overlay;
     }
 
+    button { font: inherit; }
+
+    /* ==============================
+       Layout Shell
+    ============================== */
     .page {
       width: min(var(--max), calc(100% - 36px));
       margin: 0 auto;
@@ -65,8 +116,8 @@
       border-radius: 32px;
       overflow: hidden;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.022)),
-        rgba(17, 16, 15, .74);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.022)),
+        rgba(17, 16, 15, 0.74);
       box-shadow: var(--shadow);
     }
 
@@ -76,39 +127,104 @@
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at 15% 20%, rgba(184,74,66,.18), transparent 28%),
-        radial-gradient(circle at 88% 78%, rgba(244,239,230,.08), transparent 32%);
+        radial-gradient(circle at 15% 20%, rgba(184, 74, 66, 0.18), transparent 28%),
+        radial-gradient(circle at 88% 78%, rgba(244, 239, 230, 0.08), transparent 32%);
       z-index: -1;
     }
 
+    /* ==============================
+       Collapsed Timeline
+    ============================== */
     .collapsed-panel {
       position: relative;
-      padding: clamp(30px, 5.5vw, 72px) clamp(20px, 5vw, 64px);
-      min-height: min(76vh, 720px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: clamp(26px, 5vw, 52px);
+      min-height: 240vh;
     }
 
     .collapsed-panel::after {
       content: "1949  至今";
       position: absolute;
-      inset: auto -2vw 2vh auto;
+      inset: auto -2vw 8vh auto;
       font-size: clamp(5rem, 17vw, 15rem);
       line-height: 1;
-      letter-spacing: -.12em;
+      letter-spacing: -0.12em;
       font-weight: 900;
-      color: rgba(244,239,230,.055);
+      color: rgba(244, 239, 230, 0.055);
       z-index: -1;
       white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .intro-stage {
+      position: sticky;
+      top: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      gap: clamp(24px, 4vw, 48px);
+      align-items: stretch;
+      height: 100vh;
+      padding: clamp(24px, 4vw, 42px);
+    }
+
+    .intro-copy-column,
+    .intro-timeline-column {
+      min-width: 0;
+    }
+
+    .intro-copy-rail,
+    .intro-timeline-card {
+      height: 100%;
+      min-height: 0;
+    }
+
+    .intro-copy-rail {
+      position: relative;
+    }
+
+    .intro-copy-card {
+      position: absolute;
+      inset: 0;
+      bottom: auto;
+      padding: clamp(26px, 4vw, 40px);
+      border-radius: 28px;
+      border: 1px solid rgba(244, 239, 230, 0.12);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+        rgba(16, 15, 14, 0.86);
+      box-shadow: 0 20px 52px rgba(0, 0, 0, 0.22);
+      transform: translateY(var(--intro-copy-shift, 0px));
+      transition: transform 180ms linear;
+    }
+
+    .intro-copy-card p {
+      margin: 0;
+      color: rgba(244, 239, 230, 0.82);
+      font-size: clamp(1rem, 1.25vw, 1.1rem);
+      line-height: 1.95;
+    }
+
+    .intro-copy-card p + p {
+      margin-top: 18px;
+    }
+
+    .intro-timeline-card {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: clamp(18px, 3vw, 30px);
+      padding: clamp(26px, 4vw, 42px);
+      border-radius: 30px;
+      border: 1px solid rgba(244, 239, 230, 0.12);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+        rgba(17, 16, 15, 0.82);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      overflow: hidden;
     }
 
     .module-title {
       margin: 0;
       font-size: clamp(1.25rem, 2.2vw, 1.68rem);
       line-height: 1.35;
-      letter-spacing: .02em;
+      letter-spacing: 0.02em;
       font-weight: 850;
       color: var(--paper);
     }
@@ -116,17 +232,44 @@
     .module-deck {
       margin: 18px 0 0;
       max-width: 680px;
-      color: rgba(244,239,230,.7);
-      font-size: clamp(.98rem, 1.5vw, 1.15rem);
+      color: rgba(244, 239, 230, 0.7);
+      font-size: clamp(0.98rem, 1.5vw, 1.15rem);
+    }
+
+    .intro-timeline-window {
+      position: relative;
+      align-self: center;
+      overflow: hidden;
+      padding: 18px 0 10px;
+    }
+
+    .intro-timeline-window::before,
+    .intro-timeline-window::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: clamp(26px, 4vw, 54px);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .intro-timeline-window::before {
+      left: 0;
+      background: linear-gradient(90deg, rgba(17, 16, 15, 0.94), transparent);
+    }
+
+    .intro-timeline-window::after {
+      right: 0;
+      background: linear-gradient(270deg, rgba(17, 16, 15, 0.94), transparent);
     }
 
     .compact-timeline {
       position: relative;
       width: 100%;
-      overflow-x: auto;
-      padding: 10px 2px 20px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(244,239,230,.3) transparent;
+      overflow: hidden;
+      padding: 10px 0 20px;
+      scrollbar-width: none;
     }
 
     .compact-track {
@@ -137,6 +280,9 @@
       gap: 0;
       align-items: start;
       padding: 0 4px;
+      transform: translateX(var(--intro-track-shift, 0px));
+      transition: transform 180ms linear;
+      will-change: transform;
     }
 
     .compact-track::before {
@@ -146,14 +292,58 @@
       right: 5.6%;
       top: 76px;
       height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(244,239,230,.56), transparent);
+      background: linear-gradient(90deg, transparent, rgba(244, 239, 230, 0.56), transparent);
     }
 
     .compact-item {
+      --compact-opacity: var(--priority-2-compact-opacity);
+      --compact-text-color: var(--priority-2-compact-text-color);
+      --compact-label-color: var(--priority-2-compact-label-color);
+      --compact-dot-size: var(--priority-2-compact-dot-size);
+      --compact-dot-margin-top: var(--priority-2-compact-dot-margin-top);
+      --compact-dot-color: var(--priority-2-compact-dot-color);
+      --compact-dot-shadow: var(--priority-2-compact-dot-shadow);
       position: relative;
-      text-align: center;
       min-height: 142px;
-      color: rgba(244,239,230,.78);
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      text-align: center;
+      cursor: pointer;
+      opacity: var(--compact-opacity);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .compact-item.priority-1 {
+      --compact-opacity: var(--priority-1-compact-opacity);
+      --compact-text-color: var(--priority-1-compact-text-color);
+      --compact-label-color: var(--priority-1-compact-label-color);
+      --compact-dot-size: var(--priority-1-compact-dot-size);
+      --compact-dot-margin-top: var(--priority-1-compact-dot-margin-top);
+      --compact-dot-color: var(--priority-1-compact-dot-color);
+      --compact-dot-shadow: var(--priority-1-compact-dot-shadow);
+    }
+
+    .compact-item.priority-3 {
+      --compact-opacity: var(--priority-3-compact-opacity);
+      --compact-text-color: var(--priority-3-compact-text-color);
+      --compact-label-color: var(--priority-3-compact-label-color);
+      --compact-dot-size: var(--priority-3-compact-dot-size);
+      --compact-dot-margin-top: var(--priority-3-compact-dot-margin-top);
+      --compact-dot-color: var(--priority-3-compact-dot-color);
+      --compact-dot-shadow: var(--priority-3-compact-dot-shadow);
+    }
+
+    .compact-item.is-active {
+      transform: translateY(-8px);
+      opacity: 1;
+    }
+
+    .compact-item:focus-visible {
+      outline: 2px solid rgba(244, 239, 230, 0.58);
+      outline-offset: 5px;
+      border-radius: 12px;
     }
 
     .compact-date {
@@ -163,46 +353,43 @@
       justify-content: center;
       padding: 0 5px;
       font-weight: 800;
-      font-size: .9rem;
+      font-size: 0.9rem;
       line-height: 1.2;
-      color: rgba(244,239,230,.78);
+      color: var(--compact-text-color);
+      transition: color 0.25s ease;
     }
 
     .compact-dot {
       position: relative;
       z-index: 1;
-      width: 13px;
-      height: 13px;
+      width: var(--compact-dot-size);
+      height: var(--compact-dot-size);
       border-radius: 99px;
-      margin: 25px auto 14px;
-      background: rgba(244,239,230,.82);
-      box-shadow: 0 0 0 7px rgba(244,239,230,.07);
+      margin: var(--compact-dot-margin-top) auto 14px;
+      background: var(--compact-dot-color);
+      box-shadow: var(--compact-dot-shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
     }
 
     .compact-label {
       width: 100%;
       padding: 0 4px;
-      font-size: .88rem;
+      font-size: 0.88rem;
       font-weight: 600;
       line-height: 1.35;
-      color: rgba(244,239,230,.7);
+      color: var(--compact-label-color);
+      transition: color 0.25s ease;
     }
 
-    .priority-1 .compact-date,
-    .priority-1 .compact-label { color: var(--paper); }
-    .priority-1 .compact-dot {
-      width: 20px;
-      height: 20px;
-      margin-top: 21px;
-      background: var(--accent);
-      box-shadow: 0 0 0 9px rgba(184,74,66,.18), 0 0 28px rgba(184,74,66,.48);
+    .compact-item.is-active .compact-date,
+    .compact-item.is-active .compact-label {
+      color: var(--paper);
     }
-    .priority-3 { opacity: .68; }
-    .priority-3 .compact-dot {
-      width: 10px;
-      height: 10px;
-      margin-top: 26px;
-      background: rgba(244,239,230,.58);
+
+    .compact-item.is-active .compact-dot {
+      transform: scale(1.08);
+      background: var(--accent);
+      box-shadow: 0 0 0 8px var(--accent-soft), 0 0 30px rgba(184, 74, 66, 0.42);
     }
 
     .expand-row {
@@ -211,8 +398,26 @@
       margin-top: -10px;
     }
 
-    button { font: inherit; }
+    .intro-expand-row {
+      justify-content: flex-start;
+      margin-top: 0;
+    }
 
+    .intro-expand-row .expand-button {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(18px);
+    }
+
+    .intro-expand-row .expand-button.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* ==============================
+       Shared Buttons
+    ============================== */
     .expand-button,
     .collapse-button,
     .nav-button,
@@ -220,10 +425,10 @@
       appearance: none;
       border: 0;
       color: var(--paper);
-      background: rgba(244,239,230,.12);
-      border: 1px solid rgba(244,239,230,.18);
+      background: rgba(244, 239, 230, 0.12);
+      border: 1px solid rgba(244, 239, 230, 0.18);
       cursor: pointer;
-      transition: transform .25s ease, background .25s ease, border-color .25s ease, opacity .25s ease;
+      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
     }
 
     .expand-button {
@@ -232,7 +437,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      letter-spacing: .05em;
+      letter-spacing: 0.05em;
     }
 
     .expand-button:hover,
@@ -240,17 +445,32 @@
     .nav-button:hover,
     .arrow-button:hover {
       transform: translateY(-1px);
-      background: rgba(184,74,66,.22);
-      border-color: rgba(184,74,66,.48);
+      background: rgba(184, 74, 66, 0.22);
+      border-color: rgba(184, 74, 66, 0.48);
     }
 
+    /* ==============================
+       Expanded Panel & Background
+    ============================== */
     .expanded-panel {
-      position: relative;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
       display: none;
-      min-height: 820px;
-      overflow: hidden;
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background: rgba(12, 11, 10, 0.94);
     }
 
+    .timeline-module.is-expanded {
+      border-radius: 0;
+      overflow: visible;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .timeline-module.is-expanded::before { display: none; }
     .timeline-module.is-expanded .collapsed-panel { display: none; }
     .timeline-module.is-expanded .expanded-panel { display: block; }
 
@@ -259,13 +479,13 @@
       inset: 0;
       z-index: -2;
       background-image:
-        linear-gradient(90deg, rgba(17,16,15,.96) 0%, rgba(17,16,15,.72) 40%, rgba(17,16,15,.9) 100%),
+        linear-gradient(90deg, rgba(17, 16, 15, 0.96) 0%, rgba(17, 16, 15, 0.72) 40%, rgba(17, 16, 15, 0.9) 100%),
         var(--event-image),
         radial-gradient(circle at var(--spot-x, 22%) var(--spot-y, 28%), color-mix(in srgb, var(--accent) 36%, transparent), transparent 31%),
         linear-gradient(132deg, var(--bg-a, #181411), var(--bg-b, #0f0e0d));
       background-size: cover, cover, auto, auto;
       background-position: center, center, center, center;
-      transition: background 520ms ease;
+      transition: background var(--background-duration) ease;
     }
 
     .expanded-background::before {
@@ -273,12 +493,12 @@
       position: absolute;
       inset: auto auto 3vh 2vw;
       font-size: clamp(7rem, 24vw, 22rem);
-      line-height: .8;
-      letter-spacing: -.13em;
+      line-height: 0.8;
+      letter-spacing: -0.13em;
       font-weight: 950;
-      color: rgba(244,239,230,.058);
+      color: rgba(244, 239, 230, 0.058);
       white-space: nowrap;
-      transition: opacity .45s ease, transform .45s ease;
+      transition: opacity 0.45s ease, transform 0.45s ease;
     }
 
     .expanded-background::after {
@@ -286,8 +506,8 @@
       position: absolute;
       inset: 0;
       background:
-        repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 7px),
-        radial-gradient(circle at 50% 50%, transparent 0 38%, rgba(0,0,0,.38) 72%);
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 7px),
+        radial-gradient(circle at 50% 50%, transparent 0 38%, rgba(0, 0, 0, 0.38) 72%);
       mix-blend-mode: normal;
     }
 
@@ -305,24 +525,27 @@
       margin: 0;
       font-size: clamp(1.25rem, 2.2vw, 1.68rem);
       line-height: 1.35;
-      letter-spacing: .02em;
+      letter-spacing: 0.02em;
       font-weight: 850;
     }
 
     .expanded-hint {
       margin: 12px 0 0;
-      color: rgba(244,239,230,.62);
-      font-size: .95rem;
+      color: rgba(244, 239, 230, 0.62);
+      font-size: 0.95rem;
     }
 
     .collapse-button {
       flex: 0 0 auto;
       border-radius: 999px;
       padding: 10px 16px;
-      font-size: .92rem;
+      font-size: 0.92rem;
       white-space: nowrap;
     }
 
+    /* ==============================
+       Prism Stage
+    ============================== */
     .stage {
       position: relative;
       z-index: 1;
@@ -352,7 +575,7 @@
       border-radius: 50%;
       background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 20%, transparent), transparent 66%);
       filter: blur(18px);
-      opacity: .74;
+      opacity: 0.74;
       pointer-events: none;
     }
 
@@ -364,7 +587,7 @@
       height: var(--face-h);
       transform-style: preserve-3d;
       transform: translate(-50%, -50%) translateZ(calc(var(--radius) * -1)) rotateY(0deg);
-      transition: transform 650ms cubic-bezier(.18,.72,.22,1);
+      transition: transform var(--carousel-duration) cubic-bezier(0.18, 0.72, 0.22, 1);
       will-change: transform;
     }
 
@@ -379,29 +602,29 @@
       height: 100%;
       padding: clamp(24px, 4vw, 50px);
       border-radius: 8px;
-      border: 1px solid rgba(244,239,230,.18);
-      border-left-color: rgba(244,239,230,.27);
-      border-right-color: rgba(0,0,0,.32);
+      border: 1px solid rgba(244, 239, 230, 0.18);
+      border-left-color: rgba(244, 239, 230, 0.27);
+      border-right-color: rgba(0, 0, 0, 0.32);
       background:
-        linear-gradient(90deg, rgba(244,239,230,.075), transparent 10%, transparent 90%, rgba(0,0,0,.18)),
-        linear-gradient(180deg, rgba(27,25,23,.92), rgba(13,12,11,.88));
+        linear-gradient(90deg, rgba(244, 239, 230, 0.075), transparent 10%, transparent 90%, rgba(0, 0, 0, 0.18)),
+        linear-gradient(180deg, rgba(27, 25, 23, 0.92), rgba(13, 12, 11, 0.88));
       box-shadow:
-        inset 1px 0 0 rgba(244,239,230,.08),
-        inset -1px 0 0 rgba(0,0,0,.34),
-        0 14px 44px rgba(0,0,0,.24);
+        inset 1px 0 0 rgba(244, 239, 230, 0.08),
+        inset -1px 0 0 rgba(0, 0, 0, 0.34),
+        0 14px 44px rgba(0, 0, 0, 0.24);
       backface-visibility: hidden;
       transform-style: preserve-3d;
-      opacity: .46;
-      filter: saturate(.85) brightness(.7);
-      transition: opacity .35s ease, filter .35s ease, box-shadow .35s ease;
+      opacity: 0.46;
+      filter: saturate(0.85) brightness(0.7);
+      transition: opacity 0.35s ease, filter 0.35s ease, box-shadow 0.35s ease;
     }
 
     .prism-face::before {
       content: "";
       position: absolute;
       inset: 14px;
-      border: 1px solid rgba(244,239,230,.08);
-      border-left-color: rgba(244,239,230,.17);
+      border: 1px solid rgba(244, 239, 230, 0.08);
+      border-left-color: rgba(244, 239, 230, 0.17);
       pointer-events: none;
     }
 
@@ -410,9 +633,9 @@
       position: absolute;
       right: 20px;
       top: 18px;
-      color: rgba(244,239,230,.16);
-      letter-spacing: .4em;
-      font-size: .75rem;
+      color: rgba(244, 239, 230, 0.16);
+      letter-spacing: 0.4em;
+      font-size: 0.75rem;
       font-weight: 800;
       writing-mode: vertical-rl;
       pointer-events: none;
@@ -422,22 +645,22 @@
       opacity: 1;
       filter: none;
       box-shadow:
-        inset 1px 0 0 rgba(244,239,230,.14),
-        inset -1px 0 0 rgba(0,0,0,.28),
-        0 24px 80px rgba(0,0,0,.36),
+        inset 1px 0 0 rgba(244, 239, 230, 0.14),
+        inset -1px 0 0 rgba(0, 0, 0, 0.28),
+        0 24px 80px rgba(0, 0, 0, 0.36),
         0 0 0 1px color-mix(in srgb, var(--accent) 38%, transparent);
     }
 
     .prism-face.priority-1 {
       background:
-        linear-gradient(90deg, rgba(184,74,66,.18), transparent 12%, transparent 88%, rgba(0,0,0,.22)),
-        linear-gradient(180deg, rgba(35,24,21,.96), rgba(14,12,11,.9));
+        linear-gradient(90deg, rgba(184, 74, 66, 0.18), transparent 12%, transparent 88%, rgba(0, 0, 0, 0.22)),
+        linear-gradient(180deg, rgba(35, 24, 21, 0.96), rgba(14, 12, 11, 0.9));
     }
 
     .prism-face.priority-3 {
       background:
-        linear-gradient(90deg, rgba(244,239,230,.045), transparent 12%, transparent 88%, rgba(0,0,0,.18)),
-        linear-gradient(180deg, rgba(22,21,20,.86), rgba(13,12,11,.82));
+        linear-gradient(90deg, rgba(244, 239, 230, 0.045), transparent 12%, transparent 88%, rgba(0, 0, 0, 0.18)),
+        linear-gradient(180deg, rgba(22, 21, 20, 0.86), rgba(13, 12, 11, 0.82));
     }
 
     .file-pin {
@@ -447,19 +670,19 @@
       width: 34px;
       height: 6px;
       border-radius: 99px;
-      background: color-mix(in srgb, var(--accent) 68%, rgba(244,239,230,.48));
+      background: color-mix(in srgb, var(--accent) 68%, rgba(244, 239, 230, 0.48));
       box-shadow: 0 0 26px color-mix(in srgb, var(--accent) 34%, transparent);
-      opacity: .82;
+      opacity: 0.82;
     }
 
     .event-meta {
       display: flex;
       align-items: center;
       gap: 12px;
-      color: rgba(244,239,230,.64);
-      font-size: .95rem;
+      color: rgba(244, 239, 230, 0.64);
+      font-size: 0.95rem;
       font-weight: 700;
-      letter-spacing: .08em;
+      letter-spacing: 0.08em;
     }
 
     .event-meta::before {
@@ -473,31 +696,61 @@
 
     .prism-face h3 {
       margin: 18px 0 18px;
-      font-size: clamp(2rem, 5.6vw, 5.3rem);
-      line-height: .95;
-      letter-spacing: -.08em;
+      font-size: var(--priority-2-title-size);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
       color: var(--paper);
       transform: translateZ(1px);
     }
 
-    .prism-face.priority-1 h3 { font-size: clamp(2.4rem, 6.6vw, 6.2rem); }
+    .prism-face.priority-1 h3 { font-size: var(--priority-1-title-size); }
+    .prism-face.priority-3 h3 { font-size: var(--priority-3-title-size); }
 
     .event-copy {
       max-width: 720px;
       margin: 0;
-      color: rgba(244,239,230,.78);
+      color: rgba(244, 239, 230, 0.78);
       font-size: clamp(1rem, 1.42vw, 1.13rem);
       line-height: 1.95;
       transform: translateZ(1px);
     }
 
-    .ending-note {
-      max-width: 520px;
-      color: rgba(244,239,230,.62);
-      border-left: 3px solid rgba(244,239,230,.25);
-      padding-left: 16px;
+    /* ==============================
+       Event Media
+    ============================== */
+    .event-figure {
+      position: relative;
+      margin: 0 0 18px;
+      transform: translateZ(1px);
     }
 
+    .event-image {
+      display: block;
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid rgba(244, 239, 230, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .event-source {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(244, 239, 230, 0.16);
+      background: rgba(17, 16, 15, 0.82);
+      color: rgba(244, 239, 230, 0.82);
+      font-size: 0.72rem;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+    }
+
+    /* ==============================
+       Navigation & Status
+    ============================== */
     .event-controls {
       position: relative;
       z-index: 5;
@@ -525,6 +778,7 @@
       padding: 12px 0;
       scrollbar-width: none;
     }
+
     .mini-nav-wrap::-webkit-scrollbar { display: none; }
 
     .mini-nav {
@@ -543,10 +797,12 @@
       left: 5%;
       right: 5%;
       height: 1px;
-      background: rgba(244,239,230,.25);
+      background: rgba(244, 239, 230, 0.25);
     }
 
     .nav-button {
+      --nav-dot-size: var(--priority-2-nav-dot-size);
+      --nav-dot-color: var(--priority-2-nav-dot-color);
       position: relative;
       z-index: 1;
       border: 0;
@@ -554,25 +810,35 @@
       display: grid;
       justify-items: center;
       gap: 7px;
-      color: rgba(244,239,230,.58);
+      color: rgba(244, 239, 230, 0.58);
       padding: 0 2px;
       min-height: 74px;
+    }
+
+    .nav-button.priority-1 {
+      --nav-dot-size: var(--priority-1-nav-dot-size);
+      --nav-dot-color: var(--priority-1-nav-dot-color);
+    }
+
+    .nav-button.priority-3 {
+      --nav-dot-size: var(--priority-3-nav-dot-size);
+      --nav-dot-color: var(--priority-3-nav-dot-color);
     }
 
     .nav-button:hover {
       background: transparent;
       transform: none;
-      color: rgba(244,239,230,.9);
+      color: rgba(244, 239, 230, 0.9);
     }
 
     .nav-dot {
-      width: 12px;
-      height: 12px;
+      width: var(--nav-dot-size);
+      height: var(--nav-dot-size);
       margin-top: 16px;
       border-radius: 999px;
-      background: rgba(244,239,230,.45);
-      box-shadow: 0 0 0 6px rgba(244,239,230,.05);
-      transition: .25s ease;
+      background: var(--nav-dot-color);
+      box-shadow: 0 0 0 6px rgba(244, 239, 230, 0.05);
+      transition: 0.25s ease;
     }
 
     .nav-button.is-active .nav-dot {
@@ -580,20 +846,20 @@
       height: 18px;
       margin-top: 13px;
       background: var(--accent);
-      box-shadow: 0 0 0 8px var(--accent-soft), 0 0 26px rgba(184,74,66,.42);
+      box-shadow: 0 0 0 8px var(--accent-soft), 0 0 26px rgba(184, 74, 66, 0.42);
     }
 
     .nav-date {
-      font-size: .78rem;
+      font-size: 0.78rem;
       line-height: 1.15;
       font-weight: 800;
-      letter-spacing: -.02em;
+      letter-spacing: -0.02em;
     }
 
     .nav-title {
-      font-size: .75rem;
+      font-size: 0.75rem;
       line-height: 1.2;
-      color: rgba(244,239,230,.46);
+      color: rgba(244, 239, 230, 0.46);
     }
 
     .nav-button.is-active .nav-date,
@@ -604,26 +870,94 @@
       left: clamp(20px, 4vw, 54px);
       bottom: 104px;
       z-index: 4;
-      color: rgba(244,239,230,.48);
-      font-size: .82rem;
-      letter-spacing: .08em;
+      color: rgba(244, 239, 230, 0.48);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
       pointer-events: none;
     }
 
+    /* ==============================
+       Responsive
+    ============================== */
+    @media (max-width: 960px) {
+      .collapsed-panel {
+        min-height: auto;
+      }
+
+      .intro-stage {
+        position: relative;
+        grid-template-columns: 1fr;
+        height: auto;
+        padding: 18px;
+      }
+
+      .intro-copy-card {
+        position: relative;
+        inset: auto;
+        transform: none;
+      }
+
+      .intro-timeline-card {
+        height: auto;
+      }
+
+      .intro-timeline-window::before,
+      .intro-timeline-window::after {
+        display: none;
+      }
+
+      .compact-timeline {
+        overflow-x: auto;
+        padding-inline: 2px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(244, 239, 230, 0.3) transparent;
+      }
+
+      .compact-track {
+        min-width: 900px;
+        transform: none;
+      }
+
+      .intro-expand-row .expand-button {
+        opacity: 1;
+        pointer-events: auto;
+        transform: none;
+      }
+    }
+
     @media (max-width: 860px) {
-      :root { --face-w: min(620px, 76vw); --face-h: 510px; }
-      .page { width: min(100% - 22px, var(--max)); padding-top: 4vh; }
-      .collapsed-panel { min-height: auto; padding: 32px 18px; border-radius: 24px; }
+      :root {
+        --face-w: min(620px, 76vw);
+        --face-h: 510px;
+      }
+
+      .page {
+        width: min(100% - 22px, var(--max));
+        padding-top: 4vh;
+      }
+
       .module-title { font-size: clamp(1.22rem, 5vw, 1.55rem); }
-      .compact-track { min-width: 900px; }
       .expanded-panel { min-height: 760px; }
-      .expanded-topbar { flex-direction: column; padding: 26px 18px 0; }
+
+      .expanded-topbar {
+        flex-direction: column;
+        padding: 26px 18px 0;
+      }
+
       .collapse-button { align-self: flex-start; }
       .stage { padding-top: 22px; }
       .prism-shell { height: 600px; perspective: 1250px; }
       .prism-face { padding: 28px 22px; }
       .prism-face h3 { font-size: clamp(2rem, 12vw, 4.1rem); }
-      .event-controls { flex-direction: column-reverse; align-items: stretch; padding-inline: 18px; }
+      .prism-face.priority-1 h3 { font-size: clamp(2.25rem, 13vw, 4.5rem); }
+      .prism-face.priority-3 h3 { font-size: clamp(1.85rem, 11vw, 3.95rem); }
+
+      .event-controls {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        padding-inline: 18px;
+      }
+
       .arrow-group { justify-content: center; }
       .mini-nav { min-width: 820px; }
       .expanded-background::before { font-size: 26vw; inset: auto auto 6vh -3vw; }
@@ -639,6 +973,8 @@
         cursor: auto;
         padding: 0 18px 14px;
         touch-action: pan-x pan-y;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 18px;
       }
 
       .prism-halo { display: none; }
@@ -659,17 +995,27 @@
         flex: 0 0 86vw;
         min-height: 500px;
         transform: none !important;
-        opacity: .58;
+        opacity: 0.58;
         filter: none;
         backface-visibility: visible;
+        scroll-snap-align: center;
       }
 
       .prism-face.is-active { opacity: 1; }
       .rotate-status { display: none; }
     }
 
+    /* ==============================
+       Reduced Motion
+    ============================== */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+
       .prism-carousel { transition: none !important; }
     }
   </style>
@@ -678,19 +1024,37 @@
   <main class="page">
     <section class="timeline-module" id="timelineModule" aria-label="白色恐怖大事記時間軸">
       <div class="collapsed-panel" id="collapsedPanel">
-        <div>
-          <h2 class="module-title">白色恐怖大事記　Timeline：1949至今</h2>
-          <p class="module-deck">白色恐怖的歷史脈絡，從戒嚴體制、校園與地方政治案件，延伸至民主化後的法律修正與記憶工作。</p>
-        </div>
+        <div class="intro-stage" id="introStage">
+          <aside class="intro-copy-column" aria-label="敘事文字區域">
+            <div class="intro-copy-rail" id="introCopyRail">
+              <article class="intro-copy-card" id="introCopyCard">
+                <p>1992年《中華民國刑法》第100條正式廢除，白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為民主富二代或是民主原住民。國立政治大學財政學系學生陳彥蓉談及這個稱呼，坦言道：「民主於我而言好像是很稀鬆平常的事。」</p>
+                <p>他認為與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。</p>
+                <p>法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感，他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的，「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」</p>
+              </article>
+            </div>
+          </aside>
 
-        <div class="compact-timeline" aria-label="簡版時間軸，可左右滑動瀏覽">
-          <div class="compact-track" id="compactTrack"></div>
-        </div>
+          <section class="intro-timeline-column" aria-labelledby="collapsedTitle">
+            <div class="intro-timeline-card">
+              <div>
+                <h2 class="module-title" id="collapsedTitle">白色恐怖大事記　Timeline：1949至今</h2>
+                <p class="module-deck">白色恐怖的歷史脈絡，從戒嚴體制、校園與地方政治案件，延伸至民主化後的法律修正與記憶工作。</p>
+              </div>
 
-        <div class="expand-row">
-          <button class="expand-button" id="expandButton" type="button" aria-expanded="false" aria-controls="expandedPanel">
-            點擊展開了解更多 <span aria-hidden="true">→</span>
-          </button>
+              <div class="intro-timeline-window">
+                <div class="compact-timeline" id="compactTimeline" aria-label="簡版時間軸，會隨頁面捲動露出不同節點">
+                  <div class="compact-track" id="compactTrack"></div>
+                </div>
+              </div>
+
+              <div class="expand-row intro-expand-row">
+                <button class="expand-button" id="expandButton" type="button" aria-expanded="false" aria-controls="expandedPanel">
+                  點擊展開了解更多 <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
 
@@ -726,368 +1090,730 @@
   </main>
 
   <script>
+    // ==============================
+    // Config
+    // 調整尺寸、速度與導引門檻時，優先看這一區
+    // ==============================
+    const CONFIG = {
+      layout: {
+        desktopFaceWidth: "min(720px, 66vw)",
+        desktopFaceHeight: "460px",
+        tabletBreakpoint: 860,
+        tabletFaceWidth: "min(620px, 76vw)",
+        tabletFaceHeight: "510px",
+        initialRadius: "940px"
+      },
+      assets: {
+        // 本地 file:// 預覽時，改由 GitHub Pages 載入圖片
+        previewBaseUrl: "https://fangk-ship-it.github.io/white-terror-timeline/"
+      },
+      cssVars: {
+        "--carousel-duration": "650ms",
+        "--background-duration": "520ms",
+        "--priority-1-compact-opacity": "1",
+        "--priority-1-compact-dot-size": "20px",
+        "--priority-1-compact-dot-margin-top": "21px",
+        "--priority-1-nav-dot-size": "14px",
+        "--priority-1-title-size": "clamp(2.4rem, 6.6vw, 6.2rem)",
+        "--priority-2-compact-opacity": "1",
+        "--priority-2-compact-dot-size": "13px",
+        "--priority-2-compact-dot-margin-top": "25px",
+        "--priority-2-nav-dot-size": "12px",
+        "--priority-2-title-size": "clamp(2rem, 5.6vw, 5.3rem)",
+        "--priority-3-compact-opacity": "0.68",
+        "--priority-3-compact-dot-size": "10px",
+        "--priority-3-compact-dot-margin-top": "26px",
+        "--priority-3-nav-dot-size": "10px",
+        "--priority-3-title-size": "clamp(1.9rem, 5vw, 5rem)"
+      },
+      interaction: {
+        dragSensitivity: 0.13,
+        edgeResistance: 12,
+        introBreakpoint: 960,
+        introRevealThreshold: 0.96,
+        mobileBreakpoint: 560,
+        focusReturnDelayMs: 220,
+        scrollBehavior: "smooth"
+      }
+    };
+
+    // ==============================
+    // Events
+    // 之後更換圖片時，直接改各事件的 image 欄位即可
+    // ==============================
     const events = [
       {
         date: "1949年",
         shortDate: "1949",
-        title: "白恐開始",
-        fullTitle: "白色恐怖開始",
+        title: "白色恐怖開始",
+        label: "白恐開始",
         importance: 2,
-        bgText: "1949",
-        accent: "#b84a42",
-        bgA: "#21130f",
-        bgB: "#0d0d0c",
-        spotX: "18%",
-        spotY: "22%",
         image: "images/1949-white-terror-start.jpg",
         imageSource: "維基百科",
-        content: "中華民國頒佈《臺灣省戒嚴令》，並施行《懲治叛亂條例》。"
+        content: "中華民國頒佈《臺灣省戒嚴令》，並施行《懲治叛亂條例》。",
+        theme: {
+          ghostText: "1949",
+          accent: "#b84a42",
+          bgA: "#21130f",
+          bgB: "#0d0d0c",
+          spotX: "18%",
+          spotY: "22%"
+        }
       },
       {
         date: "1949年4月6日",
         shortDate: "1949.04.06",
         title: "四六事件",
-        fullTitle: "四六事件",
+        label: "四六事件",
         importance: 2,
-        bgText: "04.06",
-        accent: "#a9543f",
-        bgA: "#1e1b17",
-        bgB: "#11100f",
-        spotX: "26%",
-        spotY: "30%",
         image: "images/1949-april-sixth.jpeg",
         imageSource: "新台灣和平基金會",
-        content: "臺灣省警備總司令部派遣軍警進入臺灣省立師範學院及國立臺灣大學，逮捕涉嫌「張貼標語，散發傳單，煽惑人心，擾亂秩序，妨害治安，搗毀公署，私擅拘禁執行公務之人員，居心叵測」之學生，可謂校園白色恐怖的開始。"
+        content: "臺灣省警備總司令部派遣軍警進入臺灣省立師範學院及國立臺灣大學，逮捕涉嫌「張貼標語，散發傳單，煽惑人心，擾亂秩序，妨害治安，搗毀公署，私擅拘禁執行公務之人員，居心叵測」之學生，可謂校園白色恐怖的開始。",
+        theme: {
+          ghostText: "04.06",
+          accent: "#a9543f",
+          bgA: "#1e1b17",
+          bgB: "#11100f",
+          spotX: "26%",
+          spotY: "30%"
+        }
       },
       {
         date: "1952年",
         shortDate: "1952",
         title: "鹿窟事件",
-        fullTitle: "鹿窟事件",
+        label: "鹿窟事件",
         importance: 2,
-        bgText: "1952",
-        accent: "#92704b",
-        bgA: "#1d1b12",
-        bgB: "#0f1110",
-        spotX: "72%",
-        spotY: "28%",
         image: "images/1952-luku.jpeg",
         imageSource: "國家人權記憶庫",
-        content: "逃亡的中國共產黨地下黨員躲藏於鹿窟山區，並吸收部分當地村民組成「台灣人民武裝保衛隊」。後遭政府軍隊嚴刑拷打，估計150名農民、礦工遭判刑與感訓，其中37人遭槍決死刑，98人入獄，導致該山村幾乎滅村。"
+        content: "逃亡的中國共產黨地下黨員躲藏於鹿窟山區，並吸收部分當地村民組成「台灣人民武裝保衛隊」。後遭政府軍隊嚴刑拷打，估計150名農民、礦工遭判刑與感訓，其中37人遭槍決死刑，98人入獄，導致該山村幾乎滅村。",
+        theme: {
+          ghostText: "1952",
+          accent: "#92704b",
+          bgA: "#1d1b12",
+          bgB: "#0f1110",
+          spotX: "72%",
+          spotY: "28%"
+        }
       },
       {
         date: "1979年",
         shortDate: "1979",
-        title: "美麗島",
-        fullTitle: "美麗島事件",
+        title: "美麗島事件",
+        label: "美麗島",
         importance: 3,
-        bgText: "1979",
-        accent: "#7c6859",
-        bgA: "#1a1715",
-        bgB: "#10100f",
-        spotX: "62%",
-        spotY: "72%",
         image: "images/1979-kaohsiung-incident.jpg",
         imageSource: "維基百科",
-        content: "《美麗島》雜誌社在高雄舉行世界人權日紀念日大會，未獲批准，但全臺黨外人士如施明德、呂秀蓮及陳菊等人，仍照計劃至高雄參加紀念活動，遭部隊鎮壓。"
+        content: "《美麗島》雜誌社在高雄舉行世界人權日紀念日大會，未獲批准，但全臺黨外人士如施明德、呂秀蓮及陳菊等人，仍照計劃至高雄參加紀念活動，遭部隊鎮壓。",
+        theme: {
+          ghostText: "1979",
+          accent: "#7c6859",
+          bgA: "#1a1715",
+          bgB: "#10100f",
+          spotX: "62%",
+          spotY: "72%"
+        }
       },
       {
         date: "1991年5月9日",
         shortDate: "1991.05.09",
         title: "獨台會案",
-        fullTitle: "獨台會案",
+        label: "獨台會案",
         importance: 1,
-        bgText: "1991",
-        accent: "#d55a4d",
-        bgA: "#27120f",
-        bgB: "#10100f",
-        spotX: "28%",
-        spotY: "34%",
         image: "images/1991-independence-association.jpg",
         imageSource: "新台灣和平基金會",
-        content: "法務部調查局進入清華大學校園拘捕歷史研究所學生廖偉程與數名人士，引發全臺各大學生罷課抗議，促成政府廢除《戡亂時期檢肅匪諜條例》。"
+        content: "法務部調查局進入清華大學校園拘捕歷史研究所學生廖偉程與數名人士，引發全臺各大學生罷課抗議，促成政府廢除《戡亂時期檢肅匪諜條例》。",
+        theme: {
+          ghostText: "1991",
+          accent: "#d55a4d",
+          bgA: "#27120f",
+          bgB: "#10100f",
+          spotX: "28%",
+          spotY: "34%"
+        }
       },
       {
         date: "1991年5月22日",
         shortDate: "1991.05.22",
-        title: "狹義結束",
-        fullTitle: "（狹義）白色恐怖結束",
+        title: "（狹義）白色恐怖結束",
+        label: "狹義結束",
         importance: 2,
-        bgText: "05.22",
-        accent: "#b67a4e",
-        bgA: "#1e1710",
-        bgB: "#11100f",
-        spotX: "74%",
-        spotY: "36%",
         image: "images/1991-narrow-end.jpg",
         imageSource: "中華民國總統府公報",
-        content: "廢除《戡亂時期檢肅匪諜條例》，38年的戒嚴結束。"
+        content: "廢除《戡亂時期檢肅匪諜條例》，38年的戒嚴結束。",
+        theme: {
+          ghostText: "05.22",
+          accent: "#b67a4e",
+          bgA: "#1e1710",
+          bgB: "#11100f",
+          spotX: "74%",
+          spotY: "36%"
+        }
       },
       {
         date: "1992年",
         shortDate: "1992",
-        title: "廣義結束",
-        fullTitle: "（廣義）白色恐怖結束",
+        title: "（廣義）白色恐怖結束",
+        label: "廣義結束",
         importance: 1,
-        bgText: "1992",
-        accent: "#d65e50",
-        bgA: "#241512",
-        bgB: "#0e0f10",
-        spotX: "20%",
-        spotY: "62%",
         image: "images/1992-broad-end.jpg",
         imageSource: "100行動聯盟30週年",
-        content: "由林山田、李鎮源、鍾肇政、陳傳岳等十人共同發起「一〇〇行動聯盟」，各界合力促成立法院修正《中華民國刑法》第一百條。"
+        content: "由林山田、李鎮源、鍾肇政、陳傳岳等十人共同發起「一〇〇行動聯盟」，各界合力促成立法院修正《中華民國刑法》第一百條。",
+        theme: {
+          ghostText: "1992",
+          accent: "#d65e50",
+          bgA: "#241512",
+          bgB: "#0e0f10",
+          spotX: "20%",
+          spotY: "62%"
+        }
       },
       {
         date: "2024年",
         shortDate: "2024",
-        title: "記憶日",
-        fullTitle: "制定白色恐怖記憶日",
+        title: "制定白色恐怖記憶日",
+        label: "記憶日",
         importance: 3,
-        bgText: "2024",
-        accent: "#8a6d58",
-        bgA: "#191716",
-        bgB: "#0d0e0f",
-        spotX: "62%",
-        spotY: "32%",
         image: "images/2024-memory-day.jpg",
         imageSource: "新台灣和平基金會",
-        content: "行政院核定每年5月19日為「白色恐怖記憶日」，使白恐記憶以公共紀念形式被重新標記。"
+        content: "行政院核定每年5月19日為「白色恐怖記憶日」，使白恐記憶以公共紀念形式被重新標記。",
+        theme: {
+          ghostText: "2024",
+          accent: "#8a6d58",
+          bgA: "#191716",
+          bgB: "#0d0e0f",
+          spotX: "62%",
+          spotY: "32%"
+        }
       },
       {
         date: "2026年至今",
         shortDate: "2026",
-        title: "至今",
-        fullTitle: "記憶工作持續進行",
+        title: "記憶工作持續進行",
+        label: "至今",
         importance: 2,
-        bgText: "至今",
-        accent: "#9b8a76",
-        bgA: "#181818",
-        bgB: "#0d0d0d",
-        spotX: "76%",
-        spotY: "68%",
         image: "",
         imageSource: "",
-        content: ""
+        content: "",
+        theme: {
+          ghostText: "至今",
+          accent: "#9b8a76",
+          bgA: "#181818",
+          bgB: "#0d0d0d",
+          spotX: "76%",
+          spotY: "68%"
+        }
       }
     ];
 
-    const moduleEl = document.getElementById("timelineModule");
-    const compactTrack = document.getElementById("compactTrack");
-    const expandButton = document.getElementById("expandButton");
-    const collapseButton = document.getElementById("collapseButton");
-    const expandedPanel = document.getElementById("expandedPanel");
-    const prismShell = document.getElementById("prismShell");
-    const prismCarousel = document.getElementById("prismCarousel");
-    const miniNav = document.getElementById("miniNav");
-    const prevButton = document.getElementById("prevButton");
-    const nextButton = document.getElementById("nextButton");
-    const rotateStatus = document.getElementById("rotateStatus");
+    // ==============================
+    // DOM & State
+    // ==============================
+    const DOM = {
+      module: document.getElementById("timelineModule"),
+      collapsedPanel: document.getElementById("collapsedPanel"),
+      introCopyRail: document.getElementById("introCopyRail"),
+      introCopyCard: document.getElementById("introCopyCard"),
+      compactTimeline: document.getElementById("compactTimeline"),
+      compactTrack: document.getElementById("compactTrack"),
+      expandButton: document.getElementById("expandButton"),
+      collapseButton: document.getElementById("collapseButton"),
+      expandedPanel: document.getElementById("expandedPanel"),
+      prismShell: document.getElementById("prismShell"),
+      prismCarousel: document.getElementById("prismCarousel"),
+      miniNav: document.getElementById("miniNav"),
+      prevButton: document.getElementById("prevButton"),
+      nextButton: document.getElementById("nextButton"),
+      rotateStatus: document.getElementById("rotateStatus")
+    };
 
-    const step = 360 / events.length;
-    let activeIndex = 0;
-    let currentRotation = 0;
-    let dragStartX = 0;
-    let dragStartRotation = 0;
-    let isDragging = false;
+    const state = {
+      step: 360 / events.length,
+      activeIndex: 0,
+      currentRotation: 0,
+      dragStartX: 0,
+      dragStartRotation: 0,
+      isDragging: false,
+      mobileScrollFrame: 0,
+      introFrame: 0
+    };
 
+    // ==============================
+    // Initialization
+    // ==============================
+    initializeTimeline();
+
+    function initializeTimeline() {
+      applyConfigTokens();
+      applyResponsiveLayoutVars();
+      createCompactTimeline();
+      createPrismTimeline();
+      bindEvents();
+
+      requestAnimationFrame(() => {
+        updateIntroProgress();
+      });
+    }
+
+    function applyConfigTokens() {
+      DOM.module.style.setProperty("--radius", CONFIG.layout.initialRadius);
+
+      Object.entries(CONFIG.cssVars).forEach(([name, value]) => {
+        DOM.module.style.setProperty(name, value);
+      });
+    }
+
+    function applyResponsiveLayoutVars() {
+      const isTabletWidth = window.innerWidth <= CONFIG.layout.tabletBreakpoint;
+
+      DOM.module.style.setProperty(
+        "--face-w",
+        isTabletWidth ? CONFIG.layout.tabletFaceWidth : CONFIG.layout.desktopFaceWidth
+      );
+      DOM.module.style.setProperty(
+        "--face-h",
+        isTabletWidth ? CONFIG.layout.tabletFaceHeight : CONFIG.layout.desktopFaceHeight
+      );
+    }
+
+    // ==============================
+    // Rendering
+    // ==============================
     function createCompactTimeline() {
-      compactTrack.innerHTML = "";
+      DOM.compactTrack.innerHTML = "";
+
       events.forEach((event, index) => {
         const item = document.createElement("button");
         item.type = "button";
         item.className = `compact-item priority-${event.importance}`;
-        item.setAttribute("aria-label", `展開並查看 ${event.date} ${event.fullTitle}`);
+        item.dataset.index = String(index);
+        item.setAttribute("aria-label", `移到 ${event.date} ${event.title}`);
         item.innerHTML = `
           <div class="compact-date">${event.shortDate}</div>
           <div class="compact-dot" aria-hidden="true"></div>
-          <div class="compact-label">${event.title}</div>
+          <div class="compact-label">${event.label}</div>
         `;
-        item.style.border = "0";
-        item.style.background = "transparent";
-        item.style.cursor = "pointer";
-        item.addEventListener("click", () => openTimeline(index));
-        compactTrack.appendChild(item);
+        item.addEventListener("click", () => handleCompactItemSelect(index));
+        DOM.compactTrack.appendChild(item);
       });
     }
 
     function createPrismTimeline() {
-      prismCarousel.innerHTML = "";
-      miniNav.innerHTML = "";
+      DOM.prismCarousel.innerHTML = "";
+      DOM.miniNav.innerHTML = "";
 
       events.forEach((event, index) => {
-        const face = document.createElement("article");
-        face.className = `prism-face priority-${event.importance}`;
-        face.dataset.index = index;
-        face.style.transform = `rotateY(${index * step}deg) translateZ(var(--radius))`;
-        face.setAttribute("aria-labelledby", `event-title-${index}`);
-
-        const content = event.content
-          ? `<p class="event-copy">${event.content}</p>`
-          : ``;
-
-        const media = event.image
-          ? `<figure style="position:relative;margin:0 0 18px;"><img src="${event.image}" alt="${event.fullTitle}相關圖片" loading="lazy" style="display:block;width:100%;height:180px;object-fit:cover;border-radius:6px;border:1px solid rgba(244,239,230,.12);" />${event.imageSource ? `<figcaption style="position:absolute;right:10px;bottom:10px;padding:4px 8px;border-radius:999px;background:rgba(17,16,15,.82);border:1px solid rgba(244,239,230,.16);color:rgba(244,239,230,.82);font-size:.72rem;line-height:1.2;letter-spacing:.02em;">圖片來源｜${event.imageSource}</figcaption>` : ``}</figure>`
-          : ``;
-
-        face.innerHTML = `
-          <div class="file-pin" aria-hidden="true"></div>
-          <div class="event-meta">${event.date}</div>
-          <h3 id="event-title-${index}">${event.fullTitle}</h3>
-          ${media}
-          ${content}
-        `;
-        prismCarousel.appendChild(face);
-
-        const navButton = document.createElement("button");
-        navButton.type = "button";
-        navButton.className = "nav-button";
-        navButton.dataset.index = index;
-        navButton.setAttribute("aria-label", `跳到 ${event.date} ${event.fullTitle}`);
-        navButton.innerHTML = `
-          <span class="nav-dot" aria-hidden="true"></span>
-          <span class="nav-date">${event.shortDate}</span>
-          <span class="nav-title">${event.title}</span>
-        `;
-        navButton.addEventListener("click", () => goToEvent(index));
-        miniNav.appendChild(navButton);
+        DOM.prismCarousel.appendChild(createPrismFace(event, index));
+        DOM.miniNav.appendChild(createNavButton(event, index));
       });
 
       updateRadius();
-      updateActiveEvent(0, true);
+      updateActiveEvent(0);
     }
 
-    function updateRadius() {
-      const face = prismCarousel.querySelector(".prism-face");
-      if (!face) return;
-      const width = face.getBoundingClientRect().width || 700;
-      const radius = (width / 2) / Math.tan(Math.PI / events.length);
-      moduleEl.style.setProperty("--radius", `${Math.round(radius)}px`);
+    function createPrismFace(event, index) {
+      const face = document.createElement("article");
+      const content = event.content ? `<p class="event-copy">${event.content}</p>` : "";
+
+      face.className = `prism-face priority-${event.importance}`;
+      face.dataset.index = String(index);
+      face.style.transform = `rotateY(${index * state.step}deg) translateZ(var(--radius))`;
+      face.setAttribute("aria-labelledby", `event-title-${index}`);
+      face.innerHTML = `
+        <div class="file-pin" aria-hidden="true"></div>
+        <div class="event-meta">${event.date}</div>
+        <h3 id="event-title-${index}">${event.title}</h3>
+        ${createEventMedia(event)}
+        ${content}
+      `;
+
+      return face;
     }
 
-    function openTimeline(index = 0) {
-      moduleEl.classList.add("is-expanded");
-      expandButton.setAttribute("aria-expanded", "true");
-      expandedPanel.setAttribute("aria-hidden", "false");
+    function createEventMedia(event) {
+      const resolvedImage = resolveAssetUrl(event.image);
+      if (!resolvedImage) return "";
+
+      return `
+        <figure class="event-figure">
+          <img class="event-image" src="${resolvedImage}" alt="${event.title}相關圖片" loading="lazy" />
+          ${event.imageSource ? `<figcaption class="event-source">圖片來源｜${event.imageSource}</figcaption>` : ""}
+        </figure>
+      `;
+    }
+
+    function createNavButton(event, index) {
+      const navButton = document.createElement("button");
+
+      navButton.type = "button";
+      navButton.className = `nav-button priority-${event.importance}`;
+      navButton.dataset.index = String(index);
+      navButton.setAttribute("aria-label", `跳到 ${event.date} ${event.title}`);
+      navButton.innerHTML = `
+        <span class="nav-dot" aria-hidden="true"></span>
+        <span class="nav-date">${event.shortDate}</span>
+        <span class="nav-title">${event.label}</span>
+      `;
+      navButton.addEventListener("click", () => goToEvent(index));
+
+      return navButton;
+    }
+
+    // ==============================
+    // Intro Stage
+    // 左側文字下移、右側時間軸橫向揭露，都在這一段控制
+    // ==============================
+    function handleCompactItemSelect(index) {
+      updateActiveEvent(index);
+
+      if (isIntroStackedLayout()) {
+        DOM.compactTrack.children[index]?.scrollIntoView({
+          inline: "center",
+          block: "nearest",
+          behavior: CONFIG.interaction.scrollBehavior
+        });
+        return;
+      }
+
+      scrollIntroToIndex(index);
+    }
+
+    function scrollIntroToIndex(index) {
+      const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 0);
+      if (!scrollSpan) return;
+
+      const progress = events.length > 1 ? index / (events.length - 1) : 0;
+      const panelTop = window.scrollY + DOM.collapsedPanel.getBoundingClientRect().top;
+
+      window.scrollTo({
+        top: panelTop + scrollSpan * progress,
+        behavior: CONFIG.interaction.scrollBehavior
+      });
+    }
+
+    function updateIntroProgress() {
+      if (DOM.module.classList.contains("is-expanded")) return;
+
+      if (isIntroStackedLayout()) {
+        DOM.module.style.setProperty("--intro-copy-shift", "0px");
+        DOM.module.style.setProperty("--intro-track-shift", "0px");
+        DOM.expandButton.classList.add("is-visible");
+        return;
+      }
+
+      const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 1);
+      const panelRect = DOM.collapsedPanel.getBoundingClientRect();
+      const progress = clamp(-panelRect.top / scrollSpan, 0, 1);
+      const copyTravel = Math.max(DOM.introCopyRail.clientHeight - DOM.introCopyCard.offsetHeight, 0);
+      const trackTravel = Math.max(DOM.compactTrack.scrollWidth - DOM.compactTimeline.clientWidth, 0);
+      const targetIndex = Math.round(progress * (events.length - 1));
+
+      DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * progress)}px`);
+      DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -progress)}px`);
+
+      if (targetIndex !== state.activeIndex) {
+        updateActiveEvent(targetIndex);
+      }
+
+      DOM.expandButton.classList.toggle("is-visible", progress >= CONFIG.interaction.introRevealThreshold);
+    }
+
+    function queueIntroProgressUpdate() {
+      cancelAnimationFrame(state.introFrame);
+      state.introFrame = requestAnimationFrame(() => {
+        state.introFrame = 0;
+        updateIntroProgress();
+      });
+    }
+
+    // ==============================
+    // View State
+    // ==============================
+    function openTimeline(index = state.activeIndex) {
+      DOM.module.classList.add("is-expanded");
+      document.body.classList.add("detail-open");
+      DOM.expandButton.setAttribute("aria-expanded", "true");
+      DOM.expandedPanel.setAttribute("aria-hidden", "false");
+      DOM.expandedPanel.scrollTop = 0;
+
       requestAnimationFrame(() => {
+        applyResponsiveLayoutVars();
         updateRadius();
         goToEvent(index, true);
-        moduleEl.scrollIntoView({ block: "start", behavior: "smooth" });
+        DOM.collapseButton.focus({ preventScroll: true });
       });
     }
 
     function closeTimeline() {
-      moduleEl.classList.remove("is-expanded");
-      expandButton.setAttribute("aria-expanded", "false");
-      expandedPanel.setAttribute("aria-hidden", "true");
-      moduleEl.scrollIntoView({ block: "center", behavior: "smooth" });
-      setTimeout(() => expandButton.focus(), 220);
-    }
+      DOM.module.classList.remove("is-expanded");
+      document.body.classList.remove("detail-open");
+      DOM.expandButton.setAttribute("aria-expanded", "false");
+      DOM.expandedPanel.setAttribute("aria-hidden", "true");
+      queueIntroProgressUpdate();
 
-    function setCarouselRotation(rotation) {
-      currentRotation = rotation;
-      prismCarousel.style.transform = `translate(-50%, -50%) translateZ(calc(var(--radius) * -1)) rotateY(${rotation}deg)`;
+      setTimeout(() => {
+        DOM.expandButton.focus({ preventScroll: true });
+      }, CONFIG.interaction.focusReturnDelayMs);
     }
 
     function goToEvent(index, instant = false) {
-      const normalized = Math.max(0, Math.min(events.length - 1, index));
-      if (instant) prismCarousel.style.transition = "none";
+      const normalized = clamp(index, 0, events.length - 1);
+
       updateActiveEvent(normalized);
-      setCarouselRotation(-normalized * step);
+
+      if (isMobileLayout()) {
+        if (DOM.module.classList.contains("is-expanded")) {
+          scrollToMobileCard(normalized, instant);
+        }
+        return;
+      }
+
+      if (instant) DOM.prismCarousel.style.transition = "none";
+      setCarouselRotation(-normalized * state.step);
+
       if (instant) {
-        requestAnimationFrame(() => { prismCarousel.style.transition = ""; });
+        requestAnimationFrame(() => {
+          DOM.prismCarousel.style.transition = "";
+        });
       }
     }
 
     function updateActiveEvent(index) {
-      activeIndex = Math.max(0, Math.min(events.length - 1, index));
-      const event = events[activeIndex];
-      moduleEl.style.setProperty("--accent", event.accent);
-      moduleEl.style.setProperty("--accent-soft", `${event.accent}33`);
-      moduleEl.style.setProperty("--bg-a", event.bgA);
-      moduleEl.style.setProperty("--bg-b", event.bgB);
-      moduleEl.style.setProperty("--spot-x", event.spotX);
-      moduleEl.style.setProperty("--spot-y", event.spotY);
-      moduleEl.style.setProperty("--ghost", `"${event.bgText}"`);
-      moduleEl.style.setProperty("--event-image", event.image ? `url("${event.image}")` : "none");
+      state.activeIndex = clamp(index, 0, events.length - 1);
 
-      prismCarousel.querySelectorAll(".prism-face").forEach((face, i) => {
-        face.classList.toggle("is-active", i === activeIndex);
+      const event = events[state.activeIndex];
+      const theme = event.theme;
+      const resolvedImage = resolveAssetUrl(event.image);
+
+      DOM.module.style.setProperty("--accent", theme.accent);
+      DOM.module.style.setProperty("--accent-soft", `${theme.accent}33`);
+      DOM.module.style.setProperty("--bg-a", theme.bgA);
+      DOM.module.style.setProperty("--bg-b", theme.bgB);
+      DOM.module.style.setProperty("--spot-x", theme.spotX);
+      DOM.module.style.setProperty("--spot-y", theme.spotY);
+      DOM.module.style.setProperty("--ghost", `"${theme.ghostText}"`);
+      DOM.module.style.setProperty("--event-image", resolvedImage ? `url("${resolvedImage}")` : "none");
+
+      DOM.prismCarousel.querySelectorAll(".prism-face").forEach((face, faceIndex) => {
+        face.classList.toggle("is-active", faceIndex === state.activeIndex);
       });
-      miniNav.querySelectorAll(".nav-button").forEach((button, i) => {
-        button.classList.toggle("is-active", i === activeIndex);
-        if (i === activeIndex) button.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+
+      DOM.miniNav.querySelectorAll(".nav-button").forEach((button, buttonIndex) => {
+        button.classList.toggle("is-active", buttonIndex === state.activeIndex);
+
+        if (DOM.module.classList.contains("is-expanded") && buttonIndex === state.activeIndex) {
+          button.scrollIntoView({
+            inline: "center",
+            block: "nearest",
+            behavior: CONFIG.interaction.scrollBehavior
+          });
+        }
       });
-      prevButton.disabled = activeIndex === 0;
-      nextButton.disabled = activeIndex === events.length - 1;
-      prevButton.style.opacity = prevButton.disabled ? .42 : 1;
-      nextButton.style.opacity = nextButton.disabled ? .42 : 1;
-      rotateStatus.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(events.length).padStart(2, "0")}`;
+
+      DOM.compactTrack.querySelectorAll(".compact-item").forEach((button, buttonIndex) => {
+        button.classList.toggle("is-active", buttonIndex === state.activeIndex);
+      });
+
+      DOM.prevButton.disabled = state.activeIndex === 0;
+      DOM.nextButton.disabled = state.activeIndex === events.length - 1;
+      DOM.prevButton.style.opacity = DOM.prevButton.disabled ? 0.42 : 1;
+      DOM.nextButton.style.opacity = DOM.nextButton.disabled ? 0.42 : 1;
+      DOM.rotateStatus.textContent = `${String(state.activeIndex + 1).padStart(2, "0")} / ${String(events.length).padStart(2, "0")}`;
+    }
+
+    // ==============================
+    // Desktop Prism Rotation
+    // ==============================
+    function updateRadius() {
+      const face = DOM.prismCarousel.querySelector(".prism-face");
+      if (!face) return;
+
+      const width = face.getBoundingClientRect().width || 700;
+      const radius = (width / 2) / Math.tan(Math.PI / events.length);
+      DOM.module.style.setProperty("--radius", `${Math.round(radius)}px`);
+    }
+
+    function setCarouselRotation(rotation) {
+      state.currentRotation = rotation;
+      DOM.prismCarousel.style.transform = `translate(-50%, -50%) translateZ(calc(var(--radius) * -1)) rotateY(${rotation}deg)`;
     }
 
     function nearestIndexFromRotation(rotation) {
-      const raw = -rotation / step;
-      return Math.max(0, Math.min(events.length - 1, Math.round(raw)));
+      const rawIndex = -rotation / state.step;
+      return clamp(Math.round(rawIndex), 0, events.length - 1);
     }
 
+    // ==============================
+    // Mobile Card Scrolling
+    // 手機版改為穩定的橫向滑動卡片，並同步背景
+    // ==============================
+    function scrollToMobileCard(index, instant = false) {
+      const cards = DOM.prismCarousel.querySelectorAll(".prism-face");
+      const targetCard = cards[index];
+      if (!targetCard) return;
+
+      const shellRect = DOM.prismShell.getBoundingClientRect();
+      const cardRect = targetCard.getBoundingClientRect();
+      const nextScrollLeft =
+        DOM.prismShell.scrollLeft +
+        (cardRect.left - shellRect.left) -
+        (shellRect.width - cardRect.width) / 2;
+
+      DOM.prismShell.scrollTo({
+        left: nextScrollLeft,
+        behavior: instant ? "auto" : CONFIG.interaction.scrollBehavior
+      });
+    }
+
+    function syncActiveIndexFromMobileScroll() {
+      if (!isMobileLayout() || !DOM.module.classList.contains("is-expanded")) return;
+
+      const cards = Array.from(DOM.prismCarousel.querySelectorAll(".prism-face"));
+      if (!cards.length) return;
+
+      const shellRect = DOM.prismShell.getBoundingClientRect();
+      const shellCenter = shellRect.left + shellRect.width / 2;
+
+      let closestIndex = state.activeIndex;
+      let smallestDistance = Number.POSITIVE_INFINITY;
+
+      cards.forEach((card, index) => {
+        const cardRect = card.getBoundingClientRect();
+        const cardCenter = cardRect.left + cardRect.width / 2;
+        const distance = Math.abs(cardCenter - shellCenter);
+
+        if (distance < smallestDistance) {
+          smallestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      if (closestIndex !== state.activeIndex) {
+        updateActiveEvent(closestIndex);
+      }
+    }
+
+    // ==============================
+    // Drag Interaction
+    // ==============================
     function handleDragMove(clientX) {
-      const dx = clientX - dragStartX;
-      const sensitivity = 0.13;
-      const rotation = dragStartRotation + dx * sensitivity;
-      const minRotation = -(events.length - 1) * step;
+      const dx = clientX - state.dragStartX;
+      const rotation = state.dragStartRotation + dx * CONFIG.interaction.dragSensitivity;
+      const minRotation = -(events.length - 1) * state.step;
       const maxRotation = 0;
-      const resisted = Math.max(minRotation - 12, Math.min(maxRotation + 12, rotation));
-      setCarouselRotation(resisted);
-      const previewIndex = nearestIndexFromRotation(resisted);
-      if (previewIndex !== activeIndex) updateActiveEvent(previewIndex);
+      const resistedRotation = Math.max(
+        minRotation - CONFIG.interaction.edgeResistance,
+        Math.min(maxRotation + CONFIG.interaction.edgeResistance, rotation)
+      );
+
+      setCarouselRotation(resistedRotation);
+
+      const previewIndex = nearestIndexFromRotation(resistedRotation);
+      if (previewIndex !== state.activeIndex) {
+        updateActiveEvent(previewIndex);
+      }
     }
 
-    prismShell.addEventListener("pointerdown", (event) => {
-      if (window.matchMedia("(max-width: 560px)").matches) return;
-      isDragging = true;
-      dragStartX = event.clientX;
-      dragStartRotation = currentRotation;
-      prismShell.classList.add("is-dragging");
-      prismShell.setPointerCapture(event.pointerId);
-    });
+    function startDrag(event) {
+      if (isMobileLayout()) return;
 
-    prismShell.addEventListener("pointermove", (event) => {
-      if (!isDragging) return;
+      state.isDragging = true;
+      state.dragStartX = event.clientX;
+      state.dragStartRotation = state.currentRotation;
+      DOM.prismShell.classList.add("is-dragging");
+      DOM.prismShell.setPointerCapture(event.pointerId);
+    }
+
+    function moveDrag(event) {
+      if (!state.isDragging) return;
       handleDragMove(event.clientX);
-    });
+    }
 
     function endDrag() {
-      if (!isDragging) return;
-      isDragging = false;
-      prismShell.classList.remove("is-dragging");
-      const snapIndex = nearestIndexFromRotation(currentRotation);
+      if (!state.isDragging) return;
+
+      state.isDragging = false;
+      DOM.prismShell.classList.remove("is-dragging");
+
+      const snapIndex = nearestIndexFromRotation(state.currentRotation);
       goToEvent(snapIndex);
     }
 
-    prismShell.addEventListener("pointerup", endDrag);
-    prismShell.addEventListener("pointercancel", endDrag);
-    prismShell.addEventListener("lostpointercapture", endDrag);
+    // ==============================
+    // Events Binding
+    // ==============================
+    function bindEvents() {
+      DOM.expandButton.addEventListener("click", () => openTimeline(state.activeIndex));
+      DOM.collapseButton.addEventListener("click", closeTimeline);
+      DOM.prevButton.addEventListener("click", () => goToEvent(state.activeIndex - 1));
+      DOM.nextButton.addEventListener("click", () => goToEvent(state.activeIndex + 1));
 
-    expandButton.addEventListener("click", () => openTimeline(0));
-    collapseButton.addEventListener("click", closeTimeline);
-    prevButton.addEventListener("click", () => goToEvent(activeIndex - 1));
-    nextButton.addEventListener("click", () => goToEvent(activeIndex + 1));
+      DOM.prismShell.addEventListener("pointerdown", startDrag);
+      DOM.prismShell.addEventListener("pointermove", moveDrag);
+      DOM.prismShell.addEventListener("pointerup", endDrag);
+      DOM.prismShell.addEventListener("pointercancel", endDrag);
+      DOM.prismShell.addEventListener("lostpointercapture", endDrag);
 
-    document.addEventListener("keydown", (event) => {
-      if (!moduleEl.classList.contains("is-expanded")) return;
-      if (event.key === "Escape") closeTimeline();
-      if (event.key === "ArrowRight") goToEvent(activeIndex + 1);
-      if (event.key === "ArrowLeft") goToEvent(activeIndex - 1);
-    });
+      DOM.prismShell.addEventListener("scroll", () => {
+        if (!isMobileLayout()) return;
 
-    window.addEventListener("resize", () => {
-      updateRadius();
-      goToEvent(activeIndex, true);
-    });
+        cancelAnimationFrame(state.mobileScrollFrame);
+        state.mobileScrollFrame = requestAnimationFrame(syncActiveIndexFromMobileScroll);
+      });
 
-    createCompactTimeline();
-    createPrismTimeline();
+      document.addEventListener("keydown", (event) => {
+        if (!DOM.module.classList.contains("is-expanded")) return;
+
+        if (event.key === "Escape") closeTimeline();
+        if (event.key === "ArrowRight") goToEvent(state.activeIndex + 1);
+        if (event.key === "ArrowLeft") goToEvent(state.activeIndex - 1);
+      });
+
+      window.addEventListener("scroll", queueIntroProgressUpdate, { passive: true });
+
+      window.addEventListener("resize", () => {
+        applyResponsiveLayoutVars();
+        updateRadius();
+        goToEvent(state.activeIndex, true);
+        queueIntroProgressUpdate();
+      });
+
+      window.addEventListener("load", queueIntroProgressUpdate);
+    }
+
+    // ==============================
+    // Utilities
+    // ==============================
+    function resolveAssetUrl(path) {
+      if (!path) return "";
+      if (/^(https?:)?\/\//.test(path) || path.startsWith("data:") || path.startsWith("blob:")) {
+        return path;
+      }
+
+      const normalizedPath = path.replace(/^\.?\//, "");
+      const isLocalPreview =
+        window.location.protocol === "file:" ||
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
+
+      if (isLocalPreview) {
+        return new URL(normalizedPath, CONFIG.assets.previewBaseUrl).toString();
+      }
+
+      return normalizedPath;
+    }
+
+    function isIntroStackedLayout() {
+      return window.matchMedia(`(max-width: ${CONFIG.interaction.introBreakpoint}px)`).matches;
+    }
+
+    function isMobileLayout() {
+      return window.matchMedia(`(max-width: ${CONFIG.interaction.mobileBreakpoint}px)`).matches;
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
   </script>
 </body>
 </html>
