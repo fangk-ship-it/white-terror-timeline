@@ -150,6 +150,8 @@
       letter-spacing: -0.1em;
       font-weight: 900;
       color: rgba(78, 58, 40, 0.09);
+      opacity: var(--intro-bg-ghost-opacity, 1);
+      transition: opacity 220ms ease;
       z-index: -1;
       white-space: nowrap;
       pointer-events: none;
@@ -505,6 +507,7 @@
       pointer-events: auto;
       transform: none;
       position: relative;
+      top: clamp(10px, 1.2vw, 16px);
       z-index: 2;
     }
 
@@ -1673,6 +1676,7 @@
       if (isIntroStackedLayout()) {
         DOM.module.style.setProperty("--intro-copy-shift", "0px");
         DOM.module.style.setProperty("--intro-track-shift", "0px");
+        DOM.collapsedPanel.style.setProperty("--intro-bg-ghost-opacity", "1");
         DOM.expandButton.classList.add("is-visible");
         return;
       }
@@ -1693,6 +1697,10 @@
 
       DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
       DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
+      DOM.collapsedPanel.style.setProperty(
+        "--intro-bg-ghost-opacity",
+        String(1 - clamp((progress - 0.94) / 0.06, 0, 1))
+      );
 
       if (targetIndex !== state.activeIndex) {
         updateActiveEvent(targetIndex);
@@ -1716,6 +1724,7 @@
       if (isIntroStackedLayout()) {
         DOM.module.style.setProperty("--intro-copy-shift", "0px");
         DOM.module.style.setProperty("--intro-track-shift", "0px");
+        DOM.collapsedPanel.style.setProperty("--intro-bg-ghost-opacity", "1");
         DOM.compactTrack.children[normalized]?.scrollIntoView({
           inline: "center",
           block: "nearest",
@@ -1738,6 +1747,10 @@
 
       DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
       DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
+      DOM.collapsedPanel.style.setProperty(
+        "--intro-bg-ghost-opacity",
+        String(1 - clamp((progress - 0.94) / 0.06, 0, 1))
+      );
       DOM.expandButton.classList.add("is-visible");
     }
 
