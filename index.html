@@ -28,6 +28,10 @@
       --paper-bg-deep: #d7c4a7;
       --paper-ink: #40362c;
       --paper-line: rgba(64, 54, 44, 0.12);
+      --intro-rail-height: clamp(540px, 68vh, 720px);
+      --intro-card-extra-depth: clamp(76px, 7vh, 96px);
+      --intro-window-height: clamp(330px, 39vh, 404px);
+      --intro-window-radius: 22px;
 
       --face-w: min(720px, 66vw);
       --face-h: 460px;
@@ -181,7 +185,7 @@
     .intro-copy-rail {
       position: relative;
       width: 100%;
-      height: clamp(540px, 68vh, 720px);
+      height: var(--intro-rail-height);
       min-height: 0;
       overflow-x: visible;
       overflow-y: hidden;
@@ -245,9 +249,9 @@
       isolation: isolate;
       display: grid;
       grid-template-rows: auto minmax(0, 1fr) auto;
-      gap: clamp(22px, 3vw, 34px);
+      gap: clamp(18px, 2.4vw, 28px);
       width: 100%;
-      height: clamp(540px, 68vh, 720px);
+      height: calc(var(--intro-rail-height) + var(--intro-card-extra-depth));
       min-height: 0;
       padding: clamp(30px, 3.8vw, 44px);
       border-radius: 26px;
@@ -317,11 +321,19 @@
 
     .intro-timeline-window {
       position: relative;
-      align-self: center;
+      align-self: start;
       overflow: hidden;
-      min-height: 0;
-      margin-top: clamp(44px, 4.4vw, 58px);
+      height: var(--intro-window-height);
+      margin-top: 0;
       padding: 18px 0 12px;
+      border-radius: var(--intro-window-radius);
+      border: 1px solid rgba(244, 239, 230, 0.06);
+      background:
+        linear-gradient(180deg, rgba(26, 24, 22, 0.8), rgba(15, 14, 13, 0.92)),
+        radial-gradient(circle at 18% 16%, rgba(244, 239, 230, 0.025), transparent 24%);
+      box-shadow:
+        inset 0 0 0 1px rgba(244, 239, 230, 0.02),
+        0 16px 28px rgba(0, 0, 0, 0.18);
       z-index: 1;
     }
 
@@ -329,8 +341,8 @@
     .intro-timeline-window::after {
       content: "";
       position: absolute;
-      top: 0;
-      bottom: 0;
+      top: 12px;
+      bottom: 12px;
       width: clamp(26px, 4vw, 54px);
       z-index: 3;
       pointer-events: none;
@@ -483,8 +495,9 @@
     .intro-expand-row {
       justify-content: flex-end;
       align-items: flex-end;
+      align-self: end;
       margin-top: 0;
-      padding: 10px 2px 0 0;
+      padding: 0 2px 2px 0;
     }
 
     .intro-expand-row .expand-button {
@@ -1030,6 +1043,11 @@
 
       .intro-timeline-card {
         height: auto;
+      }
+
+      .intro-timeline-window {
+        height: auto;
+        min-height: 0;
       }
 
       .intro-timeline-window::before,
