@@ -481,20 +481,24 @@
     }
 
     .intro-expand-row {
-      justify-content: flex-start;
+      justify-content: flex-end;
+      align-items: flex-end;
       margin-top: 0;
+      padding: 10px 2px 0 0;
     }
 
     .intro-expand-row .expand-button {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(18px);
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+      position: relative;
+      z-index: 2;
     }
 
     .intro-expand-row .expand-button.is-visible {
       opacity: 1;
       pointer-events: auto;
-      transform: translateY(0);
+      transform: none;
     }
 
     /* ==============================
@@ -1622,21 +1626,26 @@
       scrollIntroToIndex(index);
     }
 
-    function scrollIntroToIndex(index) {
+    function getIntroProgressForIndex(index) {
+      const normalized = clamp(index, 0, events.length - 1);
+      const trackProgress = events.length > 1 ? normalized / (events.length - 1) : 0;
+
+      return trackProgress === 0
+        ? 0
+        : CONFIG.interaction.introTrackStartAt +
+          (1 - CONFIG.interaction.introTrackStartAt) * trackProgress;
+    }
+
+    function scrollIntroToIndex(index, behavior = CONFIG.interaction.scrollBehavior) {
       const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 0);
       if (!scrollSpan) return;
 
-      const trackProgress = events.length > 1 ? index / (events.length - 1) : 0;
-      const progress =
-        trackProgress === 0
-          ? 0
-          : CONFIG.interaction.introTrackStartAt +
-            (1 - CONFIG.interaction.introTrackStartAt) * trackProgress;
+      const progress = getIntroProgressForIndex(index);
       const panelTop = window.scrollY + DOM.collapsedPanel.getBoundingClientRect().top;
 
       window.scrollTo({
         top: panelTop + scrollSpan * progress,
-        behavior: CONFIG.interaction.scrollBehavior
+        behavior
       });
     }
 
@@ -1682,27 +1691,36 @@
       });
     }
 
-    function setIntroToEndState() {
+    function syncCollapsedIntroToIndex(index) {
+      const normalized = clamp(index, 0, events.length - 1);
+      updateActiveEvent(normalized);
+
+      if (isIntroStackedLayout()) {
+        DOM.module.style.setProperty("--intro-copy-shift", "0px");
+        DOM.module.style.setProperty("--intro-track-shift", "0px");
+        DOM.compactTrack.children[normalized]?.scrollIntoView({
+          inline: "center",
+          block: "nearest",
+          behavior: "auto"
+        });
+        DOM.expandButton.classList.add("is-visible");
+        return;
+      }
+
+      const progress = getIntroProgressForIndex(normalized);
+      const copyProgress = clamp(progress / CONFIG.interaction.introCopyEndAt, 0, 1);
+      const trackProgress = clamp(
+        (progress - CONFIG.interaction.introTrackStartAt) /
+          (1 - CONFIG.interaction.introTrackStartAt),
+        0,
+        1
+      );
       const copyTravel = Math.max(DOM.introCopyCard.offsetHeight - DOM.introCopyRail.clientHeight, 0);
       const trackTravel = Math.max(DOM.compactTrack.scrollWidth - DOM.compactTimeline.clientWidth, 0);
 
-      updateActiveEvent(events.length - 1);
-      DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -1)}px`);
-      DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -1)}px`);
+      DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
+      DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
       DOM.expandButton.classList.add("is-visible");
-    }
-
-    function scrollCollapsedIntroToEnd() {
-      if (isIntroStackedLayout()) return;
-
-      const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 0);
-      if (!scrollSpan) return;
-
-      const panelTop = window.scrollY + DOM.collapsedPanel.getBoundingClientRect().top;
-      window.scrollTo({
-        top: panelTop + scrollSpan,
-        behavior: "auto"
-      });
     }
 
     // ==============================
@@ -1727,14 +1745,16 @@
     }
 
     function closeTimeline() {
+      const lastViewedIndex = state.activeIndex;
+
       DOM.module.classList.remove("is-expanded");
       document.body.classList.remove("detail-open");
       DOM.expandButton.setAttribute("aria-expanded", "false");
       DOM.expandedPanel.setAttribute("aria-hidden", "true");
 
       requestAnimationFrame(() => {
-        setIntroToEndState();
-        scrollCollapsedIntroToEnd();
+        syncCollapsedIntroToIndex(lastViewedIndex);
+        scrollIntroToIndex(lastViewedIndex, "auto");
         queueIntroProgressUpdate();
       });
 
