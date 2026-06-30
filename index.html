@@ -154,8 +154,8 @@
       position: sticky;
       top: 0;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-      gap: clamp(26px, 2.8vw, 42px);
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: clamp(16px, 1.8vw, 26px);
       align-items: start;
       height: 100vh;
       padding: clamp(34px, 4vw, 56px) clamp(18px, 3vw, 36px) clamp(30px, 3vw, 46px);
@@ -187,13 +187,14 @@
       position: relative;
       width: 100%;
       height: clamp(540px, 68vh, 720px);
-      overflow: hidden;
+      overflow-x: visible;
+      overflow-y: hidden;
     }
 
     .intro-copy-card {
       position: absolute;
       inset: 0 auto auto 0;
-      width: min(100%, 340px);
+      width: 100%;
       padding: 0;
       border: 0;
       background: transparent;
@@ -205,13 +206,40 @@
     .intro-copy-card p {
       margin: 0;
       color: rgba(64, 54, 44, 0.96);
-      font-size: clamp(1.42rem, 1.72vw, 1.72rem);
-      line-height: 2.08;
+      font-size: clamp(1.2rem, 1.46vw, 1.46rem);
+      line-height: 2.02;
       font-weight: 500;
     }
 
     .intro-copy-card p + p {
       margin-top: 30px;
+    }
+
+    .intro-copy-quote {
+      display: block;
+      width: max-content;
+      max-width: none;
+      font-size: clamp(1.42rem, 1.7vw, 1.7rem);
+      line-height: 1.5;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      transform: scaleX(0.9);
+      transform-origin: left center;
+    }
+
+    .intro-copy-quote.is-long {
+      font-size: clamp(1.22rem, 1.4vw, 1.4rem);
+      transform: scaleX(0.79);
+    }
+
+    .intro-copy-note {
+      margin-top: 38px;
+      color: rgba(64, 54, 44, 0.82);
+      font-size: clamp(0.94rem, 1.08vw, 1.04rem);
+      line-height: 1.9;
+      font-weight: 500;
+      white-space: normal;
     }
 
     .intro-timeline-card {
@@ -970,6 +998,12 @@
         transform: none;
       }
 
+      .intro-copy-quote {
+        white-space: normal;
+        width: auto;
+        transform: none;
+      }
+
       .intro-copy-rail {
         height: auto;
         overflow: visible;
@@ -1114,9 +1148,11 @@
           <aside class="intro-copy-column" aria-label="敘事文字區域">
             <div class="intro-copy-rail" id="introCopyRail">
               <article class="intro-copy-card" id="introCopyCard">
-                <p>1992年《中華民國刑法》第100條正式廢除，白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為民主富二代或是民主原住民。國立政治大學財政學系學生陳彥蓉談及這個稱呼，坦言道：「民主於我而言好像是很稀鬆平常的事。」</p>
-                <p>他認為與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。</p>
-                <p>法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感，他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的，「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」</p>
+                <p>1992年《中華民國刑法》第100條修訂後（註一），白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為民主富二代或是民主原住民。</p>
+                <p class="intro-copy-quote">「民主於我而言好像是很稀鬆平常的事。」</p>
+                <p>國立政治大學財政學系學生陳彥蓉認為，與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感。他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的，</p>
+                <p class="intro-copy-quote is-long">「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」</p>
+                <p class="intro-copy-note">註一：刑法第100條現行條文：「意圖破壞國體，竊據國土，或以非法之方法變更國憲，顛覆政府，而以強暴或脅迫著手實行者，處七年以上有期徒刑；首謀者，處無期徒刑。」 修訂內容為新增「以強暴或脅迫著手實行」，不再僅憑思想、言論定罪。</p>
               </article>
             </div>
           </aside>
@@ -1219,7 +1255,7 @@
         dragSensitivity: 0.13,
         edgeResistance: 12,
         introBreakpoint: 960,
-        introCopyLockAt: 0.58,
+        introTrackStartAt: 0.75,
         introRevealThreshold: 0.96,
         mobileBreakpoint: 560,
         focusReturnDelayMs: 220,
@@ -1553,7 +1589,7 @@
 
     // ==============================
     // Intro Stage
-    // 左側文字下移、右側時間軸橫向揭露，都在這一段控制
+    // 左側文字先往上推進，右側時間軸在後段才開始揭露
     // ==============================
     function handleCompactItemSelect(index) {
       updateActiveEvent(index);
@@ -1574,7 +1610,12 @@
       const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 0);
       if (!scrollSpan) return;
 
-      const progress = events.length > 1 ? index / (events.length - 1) : 0;
+      const trackProgress = events.length > 1 ? index / (events.length - 1) : 0;
+      const progress =
+        trackProgress === 0
+          ? 0
+          : CONFIG.interaction.introTrackStartAt +
+            (1 - CONFIG.interaction.introTrackStartAt) * trackProgress;
       const panelTop = window.scrollY + DOM.collapsedPanel.getBoundingClientRect().top;
 
       window.scrollTo({
@@ -1596,13 +1637,19 @@
       const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 1);
       const panelRect = DOM.collapsedPanel.getBoundingClientRect();
       const progress = clamp(-panelRect.top / scrollSpan, 0, 1);
-      const copyProgress = clamp(progress / CONFIG.interaction.introCopyLockAt, 0, 1);
+      const copyProgress = clamp(progress / CONFIG.interaction.introTrackStartAt, 0, 1);
+      const trackProgress = clamp(
+        (progress - CONFIG.interaction.introTrackStartAt) /
+          (1 - CONFIG.interaction.introTrackStartAt),
+        0,
+        1
+      );
       const copyTravel = Math.max(DOM.introCopyCard.offsetHeight - DOM.introCopyRail.clientHeight, 0);
       const trackTravel = Math.max(DOM.compactTrack.scrollWidth - DOM.compactTimeline.clientWidth, 0);
-      const targetIndex = Math.round(progress * (events.length - 1));
+      const targetIndex = Math.round(trackProgress * (events.length - 1));
 
       DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
-      DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -progress)}px`);
+      DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
 
       if (targetIndex !== state.activeIndex) {
         updateActiveEvent(targetIndex);
