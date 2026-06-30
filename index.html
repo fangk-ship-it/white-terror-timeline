@@ -23,6 +23,7 @@
       --shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
       --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
       --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+      --hand: "BiauKai", "DFKai-SB", "Kaiti TC", "STKaiti", "KaiTi", serif;
       --paper-bg: #e4d7c3;
       --paper-bg-deep: #d7c4a7;
       --paper-ink: #40362c;
@@ -214,18 +215,20 @@
       display: block;
       width: 100%;
       max-width: 100%;
-      font-size: clamp(1.16rem, 1.32vw, 1.32rem);
-      line-height: 1.5;
-      font-weight: 800;
-      letter-spacing: 0.01em;
+      font-family: var(--hand);
+      font-size: clamp(1.18rem, 1.34vw, 1.34rem);
+      line-height: 1.54;
+      font-weight: 700;
+      letter-spacing: 0.03em;
       color: rgba(64, 54, 44, 0.96);
       white-space: nowrap;
       transform: none;
       overflow: visible;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.12);
     }
 
     .intro-copy-quote.is-long {
-      font-size: clamp(0.98rem, 1.08vw, 1.08rem);
+      font-size: clamp(0.96rem, 1.04vw, 1.04rem);
     }
 
     .intro-copy-note {
@@ -252,14 +255,12 @@
       background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018)) padding-box,
         linear-gradient(180deg, rgba(23, 21, 19, 0.9), rgba(23, 21, 19, 0.9)) padding-box,
-        radial-gradient(circle at 2px 2px, rgba(244, 239, 230, 0.2) 0 0.95px, transparent 1.6px) border-box,
-        radial-gradient(circle at 78% 24%, rgba(244, 239, 230, 0.18), transparent 18%) border-box,
-        radial-gradient(circle at 18% 82%, rgba(244, 239, 230, 0.13), transparent 22%) border-box,
-        linear-gradient(135deg, rgba(244, 239, 230, 0.16), rgba(244, 239, 230, 0.02) 22%, rgba(244, 239, 230, 0.11) 44%, rgba(244, 239, 230, 0.015) 66%, rgba(244, 239, 230, 0.14)) border-box;
+        linear-gradient(135deg, rgba(228, 215, 195, 0.22), rgba(228, 215, 195, 0.08) 24%, rgba(228, 215, 195, 0.12) 48%, rgba(228, 215, 195, 0.04) 70%, rgba(228, 215, 195, 0.2)) border-box;
       box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.028),
-        inset 0 0 22px rgba(244, 239, 230, 0.026),
-        inset 0 0 0 1px rgba(244, 239, 230, 0.018),
+        inset 0 1px 0 rgba(255, 255, 255, 0.02),
+        inset 0 0 0 1px rgba(244, 239, 230, 0.012),
+        0 0 0 1px rgba(228, 215, 195, 0.08),
+        0 0 26px rgba(228, 215, 195, 0.18),
         0 20px 60px rgba(47, 33, 22, 0.24);
       overflow: hidden;
     }
@@ -269,11 +270,15 @@
       position: absolute;
       inset: 0;
       background:
+        linear-gradient(90deg, rgba(228, 215, 195, 0.34), rgba(228, 215, 195, 0.14) 20px, rgba(228, 215, 195, 0.05) 38px, transparent 68px),
+        linear-gradient(270deg, rgba(228, 215, 195, 0.3), rgba(228, 215, 195, 0.12) 18px, rgba(228, 215, 195, 0.04) 36px, transparent 66px),
+        linear-gradient(180deg, rgba(228, 215, 195, 0.24), rgba(228, 215, 195, 0.1) 18px, rgba(228, 215, 195, 0.04) 36px, transparent 62px),
+        linear-gradient(0deg, rgba(228, 215, 195, 0.2), rgba(228, 215, 195, 0.08) 16px, rgba(228, 215, 195, 0.03) 34px, transparent 58px),
         radial-gradient(circle at 18% 16%, rgba(184, 74, 66, 0.13), transparent 22%),
         radial-gradient(circle at 82% 78%, rgba(244, 239, 230, 0.07), transparent 28%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 42%),
         radial-gradient(circle at 1px 1px, rgba(244, 239, 230, 0.03) 0 0.8px, transparent 1.4px);
-      background-size: auto, auto, auto, 7px 7px;
+      background-size: auto, auto, auto, auto, auto, auto, auto, 7px 7px;
       pointer-events: none;
       z-index: 0;
     }
@@ -313,13 +318,16 @@
       color: rgba(244, 239, 230, 0.7);
       font-size: clamp(1.08rem, 1.34vw, 1.2rem);
       line-height: 1.8;
+      position: relative;
+      z-index: 2;
     }
 
     .intro-timeline-window {
       position: relative;
       align-self: center;
       overflow: hidden;
-      padding: 18px 0 12px;
+      min-height: 0;
+      padding: 34px 0 12px;
     }
 
     .intro-timeline-window::before,
@@ -347,7 +355,7 @@
       position: relative;
       width: 100%;
       overflow: hidden;
-      padding: 12px 0 16px;
+      padding: 14px 0 14px;
       scrollbar-width: none;
     }
 
@@ -369,7 +377,7 @@
       position: absolute;
       left: 6.8%;
       right: 6.8%;
-      top: 138px;
+      top: 152px;
       height: 2px;
       background: linear-gradient(90deg, transparent, rgba(244, 239, 230, 0.56), transparent);
     }
@@ -426,7 +434,7 @@
     }
 
     .compact-date {
-      min-height: 92px;
+      min-height: 104px;
       display: flex;
       align-items: flex-end;
       justify-content: center;
