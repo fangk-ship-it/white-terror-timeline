@@ -38,10 +38,10 @@
       --priority-1-compact-opacity: 1;
       --priority-1-compact-text-color: var(--paper);
       --priority-1-compact-label-color: var(--paper);
-      --priority-1-compact-dot-size: 36px;
+      --priority-1-compact-dot-size: 44px;
       --priority-1-compact-dot-margin-top: 24px;
       --priority-1-compact-dot-color: var(--accent);
-      --priority-1-compact-dot-shadow: 0 0 0 12px rgba(184, 74, 66, 0.18), 0 0 38px rgba(184, 74, 66, 0.48);
+      --priority-1-compact-dot-shadow: 0 0 0 14px rgba(184, 74, 66, 0.18), 0 0 44px rgba(184, 74, 66, 0.48);
       --priority-1-nav-dot-size: 14px;
       --priority-1-nav-dot-color: rgba(244, 239, 230, 0.52);
       --priority-1-title-size: clamp(2.4rem, 6.6vw, 6.2rem);
@@ -49,10 +49,10 @@
       --priority-2-compact-opacity: 1;
       --priority-2-compact-text-color: rgba(244, 239, 230, 0.78);
       --priority-2-compact-label-color: rgba(244, 239, 230, 0.7);
-      --priority-2-compact-dot-size: 28px;
-      --priority-2-compact-dot-margin-top: 28px;
+      --priority-2-compact-dot-size: 34px;
+      --priority-2-compact-dot-margin-top: 30px;
       --priority-2-compact-dot-color: rgba(244, 239, 230, 0.82);
-      --priority-2-compact-dot-shadow: 0 0 0 10px rgba(244, 239, 230, 0.09);
+      --priority-2-compact-dot-shadow: 0 0 0 11px rgba(244, 239, 230, 0.09);
       --priority-2-nav-dot-size: 12px;
       --priority-2-nav-dot-color: rgba(244, 239, 230, 0.45);
       --priority-2-title-size: clamp(2rem, 5.6vw, 5.3rem);
@@ -60,10 +60,10 @@
       --priority-3-compact-opacity: 0.68;
       --priority-3-compact-text-color: rgba(244, 239, 230, 0.72);
       --priority-3-compact-label-color: rgba(244, 239, 230, 0.62);
-      --priority-3-compact-dot-size: 22px;
-      --priority-3-compact-dot-margin-top: 30px;
+      --priority-3-compact-dot-size: 26px;
+      --priority-3-compact-dot-margin-top: 32px;
       --priority-3-compact-dot-color: rgba(244, 239, 230, 0.58);
-      --priority-3-compact-dot-shadow: 0 0 0 8px rgba(244, 239, 230, 0.05);
+      --priority-3-compact-dot-shadow: 0 0 0 9px rgba(244, 239, 230, 0.05);
       --priority-3-nav-dot-size: 10px;
       --priority-3-nav-dot-color: rgba(244, 239, 230, 0.36);
       --priority-3-title-size: clamp(1.9rem, 5vw, 5rem);
@@ -219,18 +219,18 @@
       display: block;
       width: max-content;
       max-width: none;
-      font-size: clamp(1.42rem, 1.7vw, 1.7rem);
+      font-size: clamp(1.34rem, 1.56vw, 1.56rem);
       line-height: 1.5;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.01em;
       white-space: nowrap;
-      transform: scaleX(0.9);
+      transform: scaleX(0.88);
       transform-origin: left center;
     }
 
     .intro-copy-quote.is-long {
-      font-size: clamp(1.22rem, 1.4vw, 1.4rem);
-      transform: scaleX(0.79);
+      font-size: inherit;
+      transform: scaleX(0.72);
     }
 
     .intro-copy-note {
@@ -281,7 +281,7 @@
       line-height: 0.9;
       letter-spacing: -0.1em;
       font-weight: 900;
-      color: rgba(244, 239, 230, 0.05);
+      color: rgba(244, 239, 230, 0.028);
       white-space: nowrap;
       pointer-events: none;
       z-index: 0;
@@ -346,10 +346,10 @@
     }
 
     .compact-track {
-      min-width: 2460px;
+      min-width: 2940px;
       position: relative;
       display: grid;
-      grid-template-columns: repeat(9, minmax(268px, 1fr));
+      grid-template-columns: repeat(9, minmax(324px, 1fr));
       gap: 0;
       align-items: start;
       padding: 0 8px;
@@ -363,7 +363,7 @@
       position: absolute;
       left: 6.8%;
       right: 6.8%;
-      top: 124px;
+      top: 138px;
       height: 2px;
       background: linear-gradient(90deg, transparent, rgba(244, 239, 230, 0.56), transparent);
     }
@@ -377,7 +377,7 @@
       --compact-dot-color: var(--priority-2-compact-dot-color);
       --compact-dot-shadow: var(--priority-2-compact-dot-shadow);
       position: relative;
-      min-height: 266px;
+      min-height: 308px;
       padding: 0;
       border: 0;
       background: transparent;
@@ -420,13 +420,13 @@
     }
 
     .compact-date {
-      min-height: 82px;
+      min-height: 92px;
       display: flex;
       align-items: flex-end;
       justify-content: center;
       padding: 0 5px;
       font-weight: 800;
-      font-size: 1.58rem;
+      font-size: 1.84rem;
       line-height: 1.08;
       color: var(--compact-text-color);
       transition: color 0.25s ease;
@@ -438,7 +438,7 @@
       width: var(--compact-dot-size);
       height: var(--compact-dot-size);
       border-radius: 99px;
-      margin: var(--compact-dot-margin-top) auto 24px;
+      margin: var(--compact-dot-margin-top) auto 28px;
       background: var(--compact-dot-color);
       box-shadow: var(--compact-dot-shadow);
       transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
@@ -447,9 +447,9 @@
     .compact-label {
       width: 100%;
       padding: 0 4px;
-      font-size: 1.32rem;
+      font-size: 1.52rem;
       font-weight: 680;
-      line-height: 1.3;
+      line-height: 1.26;
       color: var(--compact-label-color);
       transition: color 0.25s ease;
     }
@@ -1236,18 +1236,18 @@
         "--carousel-duration": "650ms",
         "--background-duration": "520ms",
         "--priority-1-compact-opacity": "1",
-        "--priority-1-compact-dot-size": "36px",
+        "--priority-1-compact-dot-size": "44px",
         "--priority-1-compact-dot-margin-top": "24px",
         "--priority-1-nav-dot-size": "14px",
         "--priority-1-title-size": "clamp(2.4rem, 6.6vw, 6.2rem)",
         "--priority-2-compact-opacity": "1",
-        "--priority-2-compact-dot-size": "28px",
-        "--priority-2-compact-dot-margin-top": "28px",
+        "--priority-2-compact-dot-size": "34px",
+        "--priority-2-compact-dot-margin-top": "30px",
         "--priority-2-nav-dot-size": "12px",
         "--priority-2-title-size": "clamp(2rem, 5.6vw, 5.3rem)",
         "--priority-3-compact-opacity": "0.68",
-        "--priority-3-compact-dot-size": "22px",
-        "--priority-3-compact-dot-margin-top": "30px",
+        "--priority-3-compact-dot-size": "26px",
+        "--priority-3-compact-dot-margin-top": "32px",
         "--priority-3-nav-dot-size": "10px",
         "--priority-3-title-size": "clamp(1.9rem, 5vw, 5rem)"
       },
@@ -1255,7 +1255,8 @@
         dragSensitivity: 0.13,
         edgeResistance: 12,
         introBreakpoint: 960,
-        introTrackStartAt: 0.75,
+        introTrackStartAt: 0.5,
+        introCopyEndAt: 0.82,
         introRevealThreshold: 0.96,
         mobileBreakpoint: 560,
         focusReturnDelayMs: 220,
@@ -1637,7 +1638,7 @@
       const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 1);
       const panelRect = DOM.collapsedPanel.getBoundingClientRect();
       const progress = clamp(-panelRect.top / scrollSpan, 0, 1);
-      const copyProgress = clamp(progress / CONFIG.interaction.introTrackStartAt, 0, 1);
+      const copyProgress = clamp(progress / CONFIG.interaction.introCopyEndAt, 0, 1);
       const trackProgress = clamp(
         (progress - CONFIG.interaction.introTrackStartAt) /
           (1 - CONFIG.interaction.introTrackStartAt),
