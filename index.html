@@ -620,8 +620,14 @@
     .collapse-button {
       flex: 0 0 auto;
       border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 0.92rem;
+      min-height: 54px;
+      padding: 14px 24px;
+      font-size: 1.04rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      background: rgba(184, 74, 66, 0.26);
+      border-color: rgba(244, 239, 230, 0.24);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
       white-space: nowrap;
     }
 
@@ -1676,6 +1682,29 @@
       });
     }
 
+    function setIntroToEndState() {
+      const copyTravel = Math.max(DOM.introCopyCard.offsetHeight - DOM.introCopyRail.clientHeight, 0);
+      const trackTravel = Math.max(DOM.compactTrack.scrollWidth - DOM.compactTimeline.clientWidth, 0);
+
+      updateActiveEvent(events.length - 1);
+      DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -1)}px`);
+      DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -1)}px`);
+      DOM.expandButton.classList.add("is-visible");
+    }
+
+    function scrollCollapsedIntroToEnd() {
+      if (isIntroStackedLayout()) return;
+
+      const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 0);
+      if (!scrollSpan) return;
+
+      const panelTop = window.scrollY + DOM.collapsedPanel.getBoundingClientRect().top;
+      window.scrollTo({
+        top: panelTop + scrollSpan,
+        behavior: "auto"
+      });
+    }
+
     // ==============================
     // View State
     // ==============================
@@ -1702,7 +1731,12 @@
       document.body.classList.remove("detail-open");
       DOM.expandButton.setAttribute("aria-expanded", "false");
       DOM.expandedPanel.setAttribute("aria-hidden", "true");
-      queueIntroProgressUpdate();
+
+      requestAnimationFrame(() => {
+        setIntroToEndState();
+        scrollCollapsedIntroToEnd();
+        queueIntroProgressUpdate();
+      });
 
       setTimeout(() => {
         DOM.expandButton.focus({ preventScroll: true });
