@@ -23,7 +23,6 @@
       --shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
       --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
       --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
-      --hand: "Hannotate TC", "BiauKai", "DFKai-SB", "Kaiti TC", "STKaiti", "KaiTi", cursive;
       --paper-bg: #e4d7c3;
       --paper-bg-deep: #d7c4a7;
       --paper-ink: #40362c;
@@ -156,74 +155,26 @@
       top: 0;
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-      gap: clamp(18px, 2vw, 30px);
-      align-items: stretch;
+      gap: clamp(16px, 1.8vw, 26px);
+      align-items: start;
       height: 100vh;
-      padding: clamp(24px, 2.8vw, 34px);
-      border-radius: 34px;
-      overflow: hidden;
-      background:
-        linear-gradient(
-          104deg,
-          rgba(248, 242, 232, 0.95) 0%,
-          rgba(243, 235, 224, 0.84) 28%,
-          rgba(224, 212, 195, 0.4) 38%,
-          rgba(110, 96, 84, 0.28) 46%,
-          rgba(50, 43, 38, 0.82) 56%,
-          rgba(28, 25, 23, 0.96) 72%,
-          rgba(16, 15, 14, 0.99) 100%
-        );
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      box-shadow: 0 24px 80px rgba(62, 44, 29, 0.16);
-      backdrop-filter: blur(2px);
-    }
-
-    .intro-stage::before,
-    .intro-stage::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .intro-stage::before {
-      background:
-        radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.66), transparent 20%),
-        radial-gradient(circle at 78% 18%, rgba(184, 74, 66, 0.14), transparent 14%),
-        radial-gradient(circle at 76% 74%, rgba(255, 255, 255, 0.05), transparent 22%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.02) 42%, transparent 100%);
-      opacity: 0.76;
-      z-index: 0;
-    }
-
-    .intro-stage::after {
-      background-image:
-        linear-gradient(rgba(86, 67, 50, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(86, 67, 50, 0.024) 1px, transparent 1px);
-      background-size: 24px 24px, 24px 24px;
-      opacity: 0.24;
-      mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.92) 0 58%, rgba(0, 0, 0, 0.56) 72%, transparent 100%);
-      z-index: 0;
+      padding: clamp(34px, 4vw, 56px) clamp(18px, 3vw, 36px) clamp(30px, 3vw, 46px);
     }
 
     .intro-copy-column,
     .intro-timeline-column {
-      position: relative;
-      z-index: 1;
       min-width: 0;
       height: 100%;
     }
 
     .intro-copy-column {
       display: flex;
-      align-items: stretch;
-      padding: clamp(18px, 2.4vw, 28px) clamp(10px, 1.4vw, 18px) clamp(16px, 2vw, 24px) clamp(8px, 1vw, 12px);
+      align-items: flex-start;
     }
 
     .intro-timeline-column {
       display: flex;
       align-items: stretch;
-      padding: clamp(8px, 1.4vw, 16px) 0 clamp(10px, 1.6vw, 16px);
     }
 
     .intro-copy-rail,
@@ -234,8 +185,8 @@
 
     .intro-copy-rail {
       position: relative;
-      width: min(100%, 392px);
-      height: clamp(560px, 70vh, 760px);
+      width: 100%;
+      height: clamp(540px, 68vh, 720px);
       overflow-x: visible;
       overflow-y: hidden;
     }
@@ -255,39 +206,38 @@
     .intro-copy-card p {
       margin: 0;
       color: rgba(64, 54, 44, 0.96);
-      font-size: clamp(1.04rem, 1.14vw, 1.18rem);
-      line-height: 1.98;
+      font-size: clamp(1.2rem, 1.46vw, 1.46rem);
+      line-height: 2.02;
       font-weight: 500;
     }
 
     .intro-copy-card p + p {
-      margin-top: 26px;
+      margin-top: 30px;
     }
 
     .intro-copy-quote {
-      display: inline-block;
-      width: max-content;
-      max-width: none;
-      font-family: var(--hand);
-      font-size: clamp(2.3rem, 3vw, 3rem);
-      line-height: 1.18;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      font-size: clamp(1.16rem, 1.32vw, 1.32rem);
+      line-height: 1.5;
       font-weight: 800;
-      letter-spacing: 0.02em;
-      color: rgba(168, 48, 36, 0.98);
+      letter-spacing: 0.01em;
+      color: rgba(64, 54, 44, 0.96);
       white-space: nowrap;
-      transform-origin: left center;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+      transform: none;
+      overflow: visible;
     }
 
     .intro-copy-quote.is-long {
-      font-size: clamp(1.22rem, 1.55vw, 1.62rem);
+      font-size: clamp(0.98rem, 1.08vw, 1.08rem);
     }
 
     .intro-copy-note {
-      margin-top: 34px;
-      color: rgba(64, 54, 44, 0.76);
-      font-size: clamp(0.88rem, 0.96vw, 0.96rem);
-      line-height: 1.86;
+      margin-top: 38px;
+      color: rgba(64, 54, 44, 0.82);
+      font-size: clamp(0.94rem, 1.08vw, 1.04rem);
+      line-height: 1.9;
       font-weight: 500;
       white-space: normal;
     }
@@ -297,35 +247,44 @@
       isolation: isolate;
       display: grid;
       grid-template-rows: auto 1fr auto;
-      gap: clamp(20px, 2.6vw, 30px);
-      padding: clamp(30px, 3.5vw, 42px) clamp(20px, 2.2vw, 30px) clamp(20px, 2vw, 28px);
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
-      overflow: visible;
+      gap: clamp(22px, 3vw, 34px);
+      padding: clamp(30px, 3.8vw, 44px);
+      border-radius: 26px;
+      border: 1px solid transparent;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018)) padding-box,
+        linear-gradient(180deg, rgba(23, 21, 19, 0.9), rgba(23, 21, 19, 0.9)) padding-box,
+        radial-gradient(circle at 2px 2px, rgba(244, 239, 230, 0.11) 0 1px, transparent 1.5px) border-box,
+        linear-gradient(135deg, rgba(244, 239, 230, 0.1), rgba(244, 239, 230, 0.04) 46%, rgba(244, 239, 230, 0.09)) border-box;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.035),
+        inset 0 0 18px rgba(244, 239, 230, 0.018),
+        0 20px 60px rgba(47, 33, 22, 0.24);
+      overflow: hidden;
     }
 
     .intro-timeline-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
       background:
-        radial-gradient(circle at 20% 20%, rgba(184, 74, 66, 0.16), transparent 18%),
-        radial-gradient(circle at 88% 76%, rgba(244, 239, 230, 0.05), transparent 24%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 36%);
-      inset: -10% -8% -12% 8%;
-      filter: blur(6px);
+        radial-gradient(circle at 18% 16%, rgba(184, 74, 66, 0.13), transparent 22%),
+        radial-gradient(circle at 82% 78%, rgba(244, 239, 230, 0.07), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 42%);
+      pointer-events: none;
       z-index: 0;
     }
 
     .intro-timeline-card::after {
       content: "1949 至今";
       position: absolute;
-      right: clamp(18px, 2.2vw, 26px);
-      bottom: clamp(16px, 1.8vw, 28px);
-      font-size: clamp(4.8rem, 11.8vw, 10.4rem);
+      right: clamp(20px, 3vw, 32px);
+      bottom: clamp(10px, 1.4vw, 22px);
+      font-size: clamp(4.6rem, 12vw, 10.5rem);
       line-height: 0.9;
       letter-spacing: -0.1em;
       font-weight: 900;
-      color: rgba(244, 239, 230, 0.018);
+      color: rgba(244, 239, 230, 0.028);
       white-space: nowrap;
       pointer-events: none;
       z-index: 0;
@@ -338,31 +297,47 @@
 
     .module-title {
       margin: 0;
-      font-size: clamp(2.14rem, 3.2vw, 2.78rem);
-      line-height: 1.12;
+      font-size: clamp(1.92rem, 2.8vw, 2.42rem);
+      line-height: 1.2;
       letter-spacing: 0.02em;
       font-weight: 850;
       color: var(--paper);
     }
 
     .module-deck {
-      margin: 18px 0 0;
-      max-width: 660px;
-      color: rgba(244, 239, 230, 0.68);
-      font-size: clamp(0.98rem, 1.14vw, 1.08rem);
-      line-height: 1.78;
+      margin: 20px 0 0;
+      max-width: 700px;
+      color: rgba(244, 239, 230, 0.7);
+      font-size: clamp(1.08rem, 1.34vw, 1.2rem);
+      line-height: 1.8;
     }
 
     .intro-timeline-window {
       position: relative;
       align-self: center;
       overflow: hidden;
-      padding: 24px 0 16px;
+      padding: 18px 0 12px;
     }
 
     .intro-timeline-window::before,
     .intro-timeline-window::after {
-      display: none;
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: clamp(26px, 4vw, 54px);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .intro-timeline-window::before {
+      left: 0;
+      background: linear-gradient(90deg, rgba(17, 16, 15, 0.9), transparent);
+    }
+
+    .intro-timeline-window::after {
+      right: 0;
+      background: linear-gradient(270deg, rgba(17, 16, 15, 0.9), transparent);
     }
 
     .compact-timeline {
@@ -1011,14 +986,12 @@
         position: relative;
         grid-template-columns: 1fr;
         height: auto;
-        padding: 22px 18px 24px;
-        border-radius: 26px;
+        padding: 18px;
       }
 
       .intro-copy-column,
       .intro-timeline-column {
         height: auto;
-        padding: 0;
       }
 
       .intro-copy-card {
@@ -1030,20 +1003,17 @@
 
       .intro-copy-quote {
         white-space: normal;
-        width: 100%;
-        font-size: clamp(1.4rem, 6vw, 2rem);
-        transform: none !important;
+        width: auto;
+        transform: none;
       }
 
       .intro-copy-rail {
-        width: 100%;
         height: auto;
         overflow: visible;
       }
 
       .intro-timeline-card {
         height: auto;
-        padding: 10px 0 0;
       }
 
       .intro-timeline-window::before,
@@ -1513,7 +1483,6 @@
       bindEvents();
 
       requestAnimationFrame(() => {
-        fitIntroQuotes();
         updateIntroProgress();
       });
     }
@@ -1537,32 +1506,6 @@
         "--face-h",
         isTabletWidth ? CONFIG.layout.tabletFaceHeight : CONFIG.layout.desktopFaceHeight
       );
-    }
-
-    function fitIntroQuotes() {
-      const quotes = DOM.introCopyCard.querySelectorAll(".intro-copy-quote");
-      if (!quotes.length) return;
-
-      quotes.forEach((quote) => {
-        quote.style.fontSize = "";
-        quote.style.transform = "";
-      });
-
-      if (window.innerWidth <= CONFIG.interaction.introBreakpoint) return;
-
-      const availableWidth = DOM.introCopyRail.clientWidth;
-      if (!availableWidth) return;
-
-      quotes.forEach((quote) => {
-        const baseSize = quote.classList.contains("is-long") ? 24 : 48;
-        quote.style.fontSize = `${baseSize}px`;
-        const naturalWidth = quote.scrollWidth;
-
-        if (!baseSize || !naturalWidth) return;
-
-        const minScale = quote.classList.contains("is-long") ? 0.32 : 0.5;
-        quote.style.transform = `scaleX(${clamp(((availableWidth - 2) / naturalWidth) * 1.02, minScale, 2.8).toFixed(3)})`;
-      });
     }
 
     // ==============================
@@ -1992,16 +1935,12 @@
 
       window.addEventListener("resize", () => {
         applyResponsiveLayoutVars();
-        fitIntroQuotes();
         updateRadius();
         goToEvent(state.activeIndex, true);
         queueIntroProgressUpdate();
       });
 
-      window.addEventListener("load", () => {
-        fitIntroQuotes();
-        queueIntroProgressUpdate();
-      });
+      window.addEventListener("load", queueIntroProgressUpdate);
     }
 
     // ==============================
