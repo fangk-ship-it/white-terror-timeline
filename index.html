@@ -849,6 +849,13 @@
     .prism-face.priority-1 h3 { font-size: var(--priority-1-title-size); }
     .prism-face.priority-3 h3 { font-size: var(--priority-3-title-size); }
 
+    .prism-face.is-compact-copy h3 {
+      gap: 0.08em;
+      padding-right: 16px;
+      font-size: clamp(1.32rem, 2.2vw, 2.12rem);
+      letter-spacing: -0.05em;
+    }
+
     .event-title-prefix {
       flex: 0 0 auto;
       font-size: 0.5em;
@@ -861,6 +868,15 @@
       min-width: 0;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .prism-face.is-compact-copy .event-title-prefix {
+      font-size: 0.44em;
+    }
+
+    .prism-face.is-compact-copy .event-title-main {
+      overflow: visible;
+      text-overflow: clip;
     }
 
     .event-copy {
@@ -1150,6 +1166,7 @@
       .prism-face h3 { font-size: clamp(2rem, 12vw, 4.1rem); }
       .prism-face.priority-1 h3 { font-size: clamp(2.25rem, 13vw, 4.5rem); }
       .prism-face.priority-3 h3 { font-size: clamp(1.85rem, 11vw, 3.95rem); }
+      .prism-face.is-compact-copy h3 { font-size: clamp(1.42rem, 7vw, 2.56rem); }
 
       .event-controls {
         flex-direction: column-reverse;
