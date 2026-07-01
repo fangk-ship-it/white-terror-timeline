@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>白色恐怖大事記　Timeline：1949至今</title>
+  <title>白色恐怖大事記：1949至今</title>
   <style>
     /* ==============================
        Module Tokens
@@ -28,8 +28,8 @@
       --paper-bg-deep: #d7c4a7;
       --paper-ink: #40362c;
       --paper-line: rgba(64, 54, 44, 0.12);
-      --intro-rail-height: clamp(540px, 68vh, 720px);
-      --intro-card-extra-depth: clamp(76px, 7vh, 96px);
+      --intro-rail-height: clamp(500px, 59vh, 620px);
+      --intro-card-extra-depth: clamp(86px, 8vh, 108px);
       --intro-window-height: clamp(330px, 39vh, 404px);
       --intro-window-radius: 22px;
 
@@ -142,19 +142,7 @@
     }
 
     .collapsed-panel::after {
-      content: "1949  至今";
-      position: absolute;
-      inset: auto 1vw 8vh auto;
-      font-size: clamp(4.4rem, 14vw, 12rem);
-      line-height: 1;
-      letter-spacing: -0.1em;
-      font-weight: 900;
-      color: rgba(78, 58, 40, 0.09);
-      opacity: var(--intro-bg-ghost-opacity, 1);
-      transition: opacity 220ms ease;
-      z-index: -1;
-      white-space: nowrap;
-      pointer-events: none;
+      content: none;
     }
 
     .intro-stage {
@@ -181,7 +169,7 @@
 
     .intro-timeline-column {
       display: flex;
-      align-items: stretch;
+      align-items: center;
     }
 
     .intro-copy-rail {
@@ -1198,7 +1186,7 @@
           <section class="intro-timeline-column" aria-labelledby="collapsedTitle">
             <div class="intro-timeline-card">
               <div>
-                <h2 class="module-title" id="collapsedTitle">白色恐怖大事記　Timeline：1949至今</h2>
+                <h2 class="module-title" id="collapsedTitle">白色恐怖大事記：1949至今</h2>
                 <p class="module-deck">白色恐怖的歷史脈絡，從戒嚴體制、校園與地方政治案件，延伸至民主化後的法律修正與記憶工作。</p>
               </div>
 
@@ -1222,7 +1210,7 @@
         <div class="expanded-background" id="expandedBackground"></div>
         <div class="expanded-topbar">
           <div>
-            <h2>白色恐怖大事記　Timeline：1949至今</h2>
+            <h2>白色恐怖大事記：1949至今</h2>
             <p class="expanded-hint">左右拖曳，或點選兩側與下方按鍵，九張檔案卡會像九角柱一樣轉動；背景視覺會隨事件切換。</p>
           </div>
           <button class="collapse-button" id="collapseButton" type="button">收起時間軸</button>
@@ -1674,7 +1662,6 @@
       if (isIntroStackedLayout()) {
         DOM.module.style.setProperty("--intro-copy-shift", "0px");
         DOM.module.style.setProperty("--intro-track-shift", "0px");
-        DOM.collapsedPanel.style.setProperty("--intro-bg-ghost-opacity", "1");
         DOM.expandButton.classList.add("is-visible");
         return;
       }
@@ -1695,10 +1682,6 @@
 
       DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
       DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
-      DOM.collapsedPanel.style.setProperty(
-        "--intro-bg-ghost-opacity",
-        String(1 - clamp((progress - 0.94) / 0.06, 0, 1))
-      );
 
       if (targetIndex !== state.activeIndex) {
         updateActiveEvent(targetIndex);
@@ -1722,7 +1705,6 @@
       if (isIntroStackedLayout()) {
         DOM.module.style.setProperty("--intro-copy-shift", "0px");
         DOM.module.style.setProperty("--intro-track-shift", "0px");
-        DOM.collapsedPanel.style.setProperty("--intro-bg-ghost-opacity", "1");
         DOM.compactTrack.children[normalized]?.scrollIntoView({
           inline: "center",
           block: "nearest",
@@ -1745,10 +1727,6 @@
 
       DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
       DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
-      DOM.collapsedPanel.style.setProperty(
-        "--intro-bg-ghost-opacity",
-        String(1 - clamp((progress - 0.94) / 0.06, 0, 1))
-      );
       DOM.expandButton.classList.add("is-visible");
     }
 
